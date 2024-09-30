@@ -1,6 +1,6 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
-//Matei Palcau
+//Matei-Victor Palcau
 
 import edu.jsu.mcis.cs310.tas_fa24.dao.*;
 import java.time.*;
