@@ -26,7 +26,7 @@ public class TimeAccruedTest {
 
         Punch p = punchDAO.find(3634);
         Badge b = p.getBadge();
-        Shift s = shiftDAO.find(b);
+        ShiftDAO s = shiftDAO.find(b);
         
         /* Get/Adjust Punch List */
 
@@ -56,7 +56,7 @@ public class TimeAccruedTest {
 
         Punch p = punchDAO.find(436);
         Badge b = p.getBadge();
-        Shift s = shiftDAO.find(b);
+        ShiftDAO s = shiftDAO.find(b);
         
         /* Get/Adjust Punch List */
 
@@ -86,7 +86,7 @@ public class TimeAccruedTest {
 
         Punch p = punchDAO.find(1087);
         Badge b = p.getBadge();
-        Shift s = shiftDAO.find(b);
+        ShiftDAO s = shiftDAO.find(b);
         
         /* Get/Adjust Punch List */
 
@@ -116,7 +116,7 @@ public class TimeAccruedTest {
 
         Punch p = punchDAO.find(4943);
         Badge b = p.getBadge();
-        Shift s = shiftDAO.find(b);
+        ShiftDAO s = shiftDAO.find(b);
         
         /* Get/Adjust Punch List */
 

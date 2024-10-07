@@ -22,9 +22,9 @@ public class ShiftFindTest {
 
         /* Retrieve Shift Rulesets from Database */
         
-        Shift s1 = shiftDAO.find(1);
-        Shift s2 = shiftDAO.find(2);
-        Shift s3 = shiftDAO.find(3);
+        ShiftDAO s1 = shiftDAO.find(1);
+        ShiftDAO s2 = shiftDAO.find(2);
+        ShiftDAO s3 = shiftDAO.find(3);
 
         /* Compare to Expected Values */
         
@@ -48,9 +48,9 @@ public class ShiftFindTest {
 
         /* Retrieve Shift Rulesets from Database */
         
-        Shift s1 = shiftDAO.find(b1);
-        Shift s2 = shiftDAO.find(b2);
-        Shift s3 = shiftDAO.find(b3);
+        ShiftDAO s1 = shiftDAO.find(b1);
+        ShiftDAO s2 = shiftDAO.find(b2);
+        ShiftDAO s3 = shiftDAO.find(b3);
 
         /* Compare to Expected Values */
         

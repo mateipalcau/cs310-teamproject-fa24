@@ -34,7 +34,7 @@ public class JSONTest {
             /* Get Punch/Badge/Shift Objects */
             Punch p = punchDAO.find(3634);
             Badge b = badgeDAO.find(p.getBadge().getId());
-            Shift s = shiftDAO.find(b);
+            ShiftDAO s = shiftDAO.find(b);
 
             /* Get/Adjust Daily Punch List */
             ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginaltimestamp().toLocalDate());
@@ -76,7 +76,7 @@ public class JSONTest {
             /* Get Punch/Badge/Shift Objects */
             Punch p = punchDAO.find(1087);
             Badge b = badgeDAO.find(p.getBadge().getId());
-            Shift s = shiftDAO.find(b);
+            ShiftDAO s = shiftDAO.find(b);
 
             /* Get/Adjust Daily Punch List */
             ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginaltimestamp().toLocalDate());
@@ -117,7 +117,7 @@ public class JSONTest {
             /* Get Punch/Badge/Shift Objects */
             Punch p = punchDAO.find(4943);
             Badge b = badgeDAO.find(p.getBadge().getId());
-            Shift s = shiftDAO.find(b);
+            ShiftDAO s = shiftDAO.find(b);
 
             /* Get/Adjust Daily Punch List */
             ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginaltimestamp().toLocalDate());
