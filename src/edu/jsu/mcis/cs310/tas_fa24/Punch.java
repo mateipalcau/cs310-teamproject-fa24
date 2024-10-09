@@ -26,14 +26,13 @@ public class Punch {
         this.adjustmentType = null;  
         
     }
-    public void Punch(int id, int terminalid, Badge badge, LocalDateTime originaltimestamp, EventType punchType,LocalDateTime originalTimestamp, LocalDateTime adjustedTimestamp, 
-        PunchAdjustmentType adjustmentType) {
+    public void Punch(int id, int terminalid, Badge badge, LocalDateTime originaltimestamp, EventType punchtype) {
         this.id = id;
         this.terminalid = terminalid;
-        // this.punchType = punchtype;
-        this.originalTimestamp = originalTimestamp;
-        this.adjustedTimestamp = adjustedTimestamp;
-        this.adjustmentType = adjustmentType;
+        this.badge=badge;
+        this.punchType = punchtype;
+        this.originalTimestamp = originaltimestamp;
+        
     }
     
     public Integer getId(){
