@@ -19,7 +19,7 @@ public class PunchDAO {
         this.daoFactory = daoFactory;
     }
     
-    public Punch find(String id) {
+    public Punch find(int id) {
 
         Punch punch = null;
 
@@ -33,7 +33,7 @@ public class PunchDAO {
             if (conn.isValid(0)) {
 
                 ps = conn.prepareStatement(QUERY_FIND);
-                ps.setString(1, id);
+                ps.setInt(1, id);
 
                 boolean hasresults = ps.execute();
 
@@ -43,7 +43,7 @@ public class PunchDAO {
 
                     while (rs.next()) {
                         
-                        String terminalId = rs.getString("terminalid");
+                        int terminalId = rs.getInt("terminalid");
                         Badge badge=(Badge)rs.getObject("badgeid");
                         
                         LocalDateTime originalTimeStamp=(LocalDateTime)rs.getObject("timestamp");
