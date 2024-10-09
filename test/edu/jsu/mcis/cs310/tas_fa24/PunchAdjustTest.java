@@ -23,7 +23,7 @@ public class PunchAdjustTest {
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        Shift s1 = shiftDAO.find(1);
+        ShiftDAO s1 = shiftDAO.find(1);
 
         Punch p1 = punchDAO.find(3634);
         Punch p2 = punchDAO.find(3687);
@@ -61,7 +61,7 @@ public class PunchAdjustTest {
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        Shift s1 = shiftDAO.find(1);
+        ShiftDAO s1 = shiftDAO.find(1);
 
         Punch p1 = punchDAO.find(1087);
         Punch p2 = punchDAO.find(1162);
@@ -89,7 +89,7 @@ public class PunchAdjustTest {
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        Shift s2 = shiftDAO.find(2);
+        ShiftDAO s2 = shiftDAO.find(2);
 
         Punch p1 = punchDAO.find(4943);
         Punch p2 = punchDAO.find(5004);
@@ -117,7 +117,7 @@ public class PunchAdjustTest {
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        Shift s2 = shiftDAO.find(2);
+        ShiftDAO s2 = shiftDAO.find(2);
 
         Punch p1 = punchDAO.find(5463);
         Punch p2 = punchDAO.find(5541);
@@ -145,7 +145,7 @@ public class PunchAdjustTest {
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        Shift s1 = shiftDAO.find(1);
+        ShiftDAO s1 = shiftDAO.find(1);
 
         Punch p1 = punchDAO.find(151);  // Interval Adjustment Before Shift (In)
         Punch p2 = punchDAO.find(2439); // Grace Period (In)
