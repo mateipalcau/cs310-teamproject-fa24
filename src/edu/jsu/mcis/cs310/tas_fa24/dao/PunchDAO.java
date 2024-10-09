@@ -1,4 +1,3 @@
-
 package edu.jsu.mcis.cs310.tas_fa24.dao;
 
 import edu.jsu.mcis.cs310.tas_fa24.EventType;
@@ -42,12 +41,12 @@ public class PunchDAO {
                     rs = ps.getResultSet();
 
                     while (rs.next()) {
-<<<<<<< HEAD
+
 
                         String terId = rs.getString("terminalid");
                         //to complete here, ask about second Punch Constructor
                         
-=======
+
                         
                         String terminalId = rs.getString("terminalid");
                         Badge badge=(Badge)rs.getObject("badgeid");
@@ -57,8 +56,6 @@ public class PunchDAO {
                         EventType punchtype=(EventType)rs.getObject("eventtypeid");
                         
                         punch = new Punch(id,terminalId,badge,originalTimeStamp,punchtype);
->>>>>>> 70723adb127cfa0f90ad63f0adbfe439f00f9825
-
                     }
 
                 }
