@@ -42,10 +42,15 @@ public class PunchDAO {
                     rs = ps.getResultSet();
 
                     while (rs.next()) {
-
-                        String terId = rs.getString("terminalid");
-                        //to complete here, ask about second Punch Constructor
-                        punch = new Punch(id, description);
+                        
+                        String terminalId = rs.getString("terminalid");
+                        Badge badge=(Badge)rs.getObject("badgeid");
+                        
+                        LocalDateTime originalTimeStamp=(LocalDateTime)rs.getObject("timestamp");
+                        
+                        EventType punchtype=(EventType)rs.getObject("eventtypeid");
+                        
+                        punch = new Punch(id,terminalId,badge,originalTimeStamp,punchtype);
 
                     }
 
