@@ -45,7 +45,7 @@ public class PunchDAO {
 
                         String terId = rs.getString("terminalid");
                         //to complete here, ask about second Punch Constructor
-                        punch = new Punch(id, description);
+                        
 
                     }
 
