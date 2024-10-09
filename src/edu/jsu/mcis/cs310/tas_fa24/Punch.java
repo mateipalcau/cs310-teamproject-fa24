@@ -9,7 +9,7 @@ import java.sql.*;
 
 
 public class Punch {
-    private Integer id;  
+    private int id;  
     private int terminalid;  
     private Badge badge;  
     private EventType punchType; 
@@ -17,7 +17,7 @@ public class Punch {
     private LocalDateTime adjustedTimestamp;  
     private PunchAdjustmentType adjustmentType;
 
-    public void Punch(int terminalid, Badge badge, EventType punchType) {
+    public Punch(int terminalid, Badge badge, EventType punchType) {
         this.terminalid = terminalid;
         this.badge = badge;
         // this.punchType = punchtype;
@@ -26,7 +26,7 @@ public class Punch {
         this.adjustmentType = null;  
         
     }
-    public void Punch(int id, int terminalid, Badge badge, LocalDateTime originaltimestamp, EventType punchtype) {
+    public Punch(int id, int terminalid, Badge badge, LocalDateTime originaltimestamp, EventType punchtype) {
         this.id = id;
         this.terminalid = terminalid;
         this.badge=badge;
@@ -35,7 +35,7 @@ public class Punch {
         
     }
     
-    public Integer getId(){
+    public int getId(){
         return this.id;
     }
     public int getTerminalId(){
