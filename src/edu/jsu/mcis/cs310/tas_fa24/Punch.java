@@ -20,7 +20,7 @@ public class Punch {
     public Punch(int terminalid, Badge badge, EventType punchType) {
         this.terminalid = terminalid;
         this.badge = badge;
-        // this.punchType = punchtype;
+        this.punchType = punchType;
         this.originalTimestamp = LocalDateTime.now();  
         this.adjustedTimestamp = null;  
         this.adjustmentType = null;  
@@ -59,15 +59,12 @@ public class Punch {
     public String printOriginal() {
 
         StringBuilder s = new StringBuilder();
-        s.append("terminal id: ");
-        s.append('#').append(this.terminalid).append(' ');
+        s.append("Terminal ID: #").append(this.terminalid).append(' ');
+        s.append("Badge ID: #").append(this.badge).append(' ');
+        s.append("Timestamp: ").append(this.originalTimestamp.toString()).append(' ');
         
-        s.append("badge id: ");
-        s.append('#').append(this.badge).append(' ');
         
-        s.append("timestamp: ");
         //not sure if the conversion will work
-        s.append(this.originalTimestamp.toString()).append(' ');
         
         //s.append("event type: ");
         //s.append(this.punchtype.toString()).append(' ');
