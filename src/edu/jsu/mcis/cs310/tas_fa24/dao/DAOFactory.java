@@ -1,6 +1,8 @@
 package edu.jsu.mcis.cs310.tas_fa24.dao;
 
 import java.sql.*;
+import java.time.*;
+import java.util.HashMap;
 
 public final class DAOFactory {
 
@@ -38,7 +40,9 @@ public final class DAOFactory {
     
     public ShiftDAO getShiftDAO()
     {
-        return new ShiftDAO();//figure this out
+        HashMap<String, LocalTime> shiftData = new HashMap<String, LocalTime>();
+        //fill hashmap
+        return new ShiftDAO(shiftData);//figure this out
     }
 
 }
