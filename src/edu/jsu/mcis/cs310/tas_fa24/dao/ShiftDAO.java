@@ -30,4 +30,22 @@ public class ShiftDAO {
         lunchDuration = data.get("lunch");
         shiftDuration = data.get("shift");
     }
+    
+    @Override
+    public String toString()
+    {
+        String test = "Shift 1: ";
+        test += "Shift 1: " + startShift + " - " + endShift + " (" + shiftDuration + "); ";
+        return test;
+    }
+    
+    public ShiftDAO find()
+    {
+        ShiftDAO testShift = new ShiftDAO();
+        //connect to database
+        //edit find method in badgedao
+        return testShift;
+    }
+    
+    
 }
