@@ -1,81 +1,63 @@
-
 package edu.jsu.mcis.cs310.tas_fa24;
 
-import edu.jsu.mcis.cs310.tas_fa24.EventType;
 import java.time.LocalDateTime;
-import edu.jsu.mcis.cs310.tas_fa24.Badge;
-import edu.jsu.mcis.cs310.tas_fa24.PunchAdjustmentType;
-import java.sql.*;
-
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Punch {
     private int id;  
-    private int terminalid;  
-    private Badge badge;  
-    private EventType punchType; 
-    private LocalDateTime originalTimestamp; 
+    final private int terminalid;  
+    final private Badge badge;  
+    final private EventType punchType; 
+    final private LocalDateTime originalTimestamp; 
     private LocalDateTime adjustedTimestamp;  
-    private PunchAdjustmentType adjustmentType;
 
+    //New Punch
     public Punch(int terminalid, Badge badge, EventType punchType) {
         this.terminalid = terminalid;
         this.badge = badge;
         this.punchType = punchType;
         this.originalTimestamp = LocalDateTime.now();  
         this.adjustedTimestamp = null;  
-        this.adjustmentType = null;  
-        
     }
+    
+    //Existing punch
     public Punch(int id, int terminalid, Badge badge, LocalDateTime originaltimestamp, EventType punchtype) {
         this.id = id;
         this.terminalid = terminalid;
-        this.badge=badge;
+        this.badge = badge;
         this.punchType = punchtype;
         this.originalTimestamp = originaltimestamp;
-        
     }
-    
-    public int getId(){
+
+    public int getId() {
         return this.id;
     }
-    public int getTerminalId(){
+
+    public int getTerminalId() {
         return this.terminalid;
     }
-    public Badge getBadge(){
+
+    public Badge getBadge() {
         return this.badge;
     }
-    public EventType getPunchType(){
+
+    public EventType getPunchType() {
         return this.punchType;
     }
-    public LocalDateTime getOriginalTimestamp(){
-        return this.originalTimestamp;
-    }
-    public LocalDateTime getAdjustedTimestamp(){
-        return this.adjustedTimestamp;
-    }
-    public PunchAdjustmentType getAdjustmentType(){
-        return this.adjustmentType;
-    }
+
     public String printOriginal() {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEE MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
+        String formattedDate = originalTimestamp.format(dateFormatter);
+        //All thgis is doing is casting the Day to uppercase. It defaults to Ull instead of UUU 
+        return String.format("#%s %s: %s", badge.getId(), punchType, formattedDate.substring(0, 3).toUpperCase() + formattedDate.substring(3));
+}
 
-        StringBuilder s = new StringBuilder();
-        s.append("Terminal ID: #").append(this.terminalid).append(' ');
-        s.append("Badge ID: #").append(this.badge).append(' ');
-        s.append("Timestamp: ").append(this.originalTimestamp.toString()).append(' ');
-        
-        
-        //not sure if the conversion will work
-        
-        //s.append("event type: ");
-        //s.append(this.punchtype.toString()).append(' ');
-
-        return s.toString();
-
-    }
-    
-    @Override
-    public String toString(){
-       return printOriginal();
-       //to add here printAdjusted when it will be done
+    public String printAdjusted() {
+        if (adjustedTimestamp == null) {
+            return "Adjusted timestamp not available.";
+        }
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEE MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
+        return String.format("#%s %s: %s", badge.getId(), punchType, adjustedTimestamp.format(dateFormatter));
     }
 }
