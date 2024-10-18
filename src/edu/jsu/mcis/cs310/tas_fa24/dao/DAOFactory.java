@@ -1,5 +1,6 @@
 package edu.jsu.mcis.cs310.tas_fa24.dao;
 
+import edu.jsu.mcis.cs310.tas_fa24.dao.DAOProperties;
 import java.sql.*;
 import java.time.*;
 import java.util.HashMap;
@@ -44,5 +45,9 @@ public final class DAOFactory {
         //fill hashmap
         return new ShiftDAO(shiftData);//figure this out
     }
+}
 
+    public PunchDAO getPunchDAO() {
+        return new PunchDAO(this);
+    }
 }
