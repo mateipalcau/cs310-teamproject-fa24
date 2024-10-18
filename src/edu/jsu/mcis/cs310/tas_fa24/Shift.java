@@ -1,6 +1,7 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 public class Shift {
+    
     private final String id, description;
 
     public Shift(String id, String description) {
