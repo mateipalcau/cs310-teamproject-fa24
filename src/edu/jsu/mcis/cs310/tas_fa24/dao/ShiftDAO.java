@@ -18,6 +18,7 @@ public class ShiftDAO {
         endShift = data.get("end");
         lunchDuration = data.get("lunch");
         shiftDuration = data.get("shift");
+
         
         this.daoFactory = daoFactory;
     }
@@ -51,9 +52,9 @@ public class ShiftDAO {
     public ShiftDAO find()//set parameter to defining data field
     {
         Badge badge = null;
-
         PreparedStatement ps = null;
         ResultSet rs = null;
+        
 
         try {
 
