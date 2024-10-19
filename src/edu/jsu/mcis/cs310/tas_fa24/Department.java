@@ -24,6 +24,6 @@ public class Department {
 
     @Override
     public String toString() {
-        return String.format("ID: %d, Description: %s, Terminal ID: %d", id, description, terminalId);
+        return String.format("#%d (%s), Terminal ID: %d", id, description, terminalId);
     }
 }

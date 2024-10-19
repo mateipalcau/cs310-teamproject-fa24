@@ -2,6 +2,7 @@ package edu.jsu.mcis.cs310.tas_fa24;
 
 import edu.jsu.mcis.cs310.tas_fa24.dao.*;
 import org.junit.*;
+import java.sql.*;
 import static org.junit.Assert.*;
 
 public class DepartmentFindTest {
@@ -16,7 +17,7 @@ public class DepartmentFindTest {
     }
 
     @Test
-    public void testFindDepartment1() {
+    public void testFindDepartment1() throws SQLException{
 
         DepartmentDAO departmentDAO = daoFactory.getDepartmentDAO();
 
@@ -31,7 +32,7 @@ public class DepartmentFindTest {
     }
 
     @Test
-    public void testFindDepartment2() {
+    public void testFindDepartment2() throws SQLException{
 
         DepartmentDAO departmentDAO = daoFactory.getDepartmentDAO();
 
@@ -46,7 +47,7 @@ public class DepartmentFindTest {
     }
 
     @Test
-    public void testFindDepartment3() {
+    public void testFindDepartment3() throws SQLException{
 
         DepartmentDAO departmentDAO = daoFactory.getDepartmentDAO();
 

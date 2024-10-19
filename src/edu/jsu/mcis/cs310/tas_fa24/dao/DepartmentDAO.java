@@ -10,16 +10,34 @@ public class DepartmentDAO {
         this.daoFactory = daoFactory;
     }
     
-    public Department find(int id) {
+    public Department find(int id) throws SQLException{
         Department depart = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = null;
         
         try {
-
             conn = daoFactory.getConnection();
-        } catch (Exception e) {
+            
+            String query = "SELECT * FROM department WHERE id = ?";
+            ps = conn.prepareStatement(query);
+            ps.setInt(1,id);
+            rs = ps.executeQuery();
+            
+            if(rs.next()) {
+                int departId = rs.getInt("id");
+                String description = rs.getString("description");
+                int terminalId = rs.getInt("terminalid");
+                
+                depart = new Department(id, description, terminalId);
+            }
+            
+        }
+        
+        finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            
         }
         return depart;
        
