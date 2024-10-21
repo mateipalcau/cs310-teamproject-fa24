@@ -4,6 +4,8 @@ import edu.jsu.mcis.cs310.tas_fa24.dao.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
+import java.beans.Transient;
+
 public class DepartmentFindTest {
 
     private DAOFactory daoFactory;
@@ -57,6 +59,21 @@ public class DepartmentFindTest {
         /* Compare to Expected Values */
         
         assertEquals("#8 (Shipping), Terminal ID: 107", d3.toString());
+
+    }
+
+    @Test
+    public void testFindDepartment4() {
+        DepartmentDAO departmentDAO = daoFactory.getDepartmentDAO();
+
+        /* Retrieve Department from Database */
+
+        Department d4 = departmentDAO.find();
+
+        /* Compare to Expected Values */
+
+        assertEquals();
+
 
     }
 
