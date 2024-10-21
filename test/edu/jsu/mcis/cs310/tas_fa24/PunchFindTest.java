@@ -4,6 +4,7 @@ import edu.jsu.mcis.cs310.tas_fa24.dao.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.sql.SQLException;
+import java.util.List;
 
 public class PunchFindTest {
 
@@ -72,4 +73,14 @@ public class PunchFindTest {
   
     assertNull("Punch should be null for an invalid ID", punch);
     }
-}
+    @Test
+    public void testFindBoundaryPunches()throws SQLException{
+        PunchDAO punchDAO = daoFactory.getPunchDAO();
+        Punch minPunch = punchDAO.find(1);
+        Punch maxPunch = punchDAO.find(9999);
+        assertNotNull("Minimum punch should exist", minPunch);
+        assertEquals("#EXPECTEDMINID CLOCK IN: DATE TIME",minPunch.printOriginal());
+        assertNotNull("Maximum punch should exist", maxPunch);
+        assertEquals("#EXPECTEDMAXID CLOCK OUT: DATE TIME", maxPunch.printOriginal());
+    }
+    }
