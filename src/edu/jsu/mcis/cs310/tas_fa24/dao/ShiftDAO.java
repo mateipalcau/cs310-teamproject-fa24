@@ -9,10 +9,9 @@ public class ShiftDAO {
     private static final String QUERY = "";//find shift sql query here
     private final DAOFactory daoFactory;
     
-    public Shift find(HashMap<String, LocalTime> data)//set parameter to defining data field
+    public Shift find(String id)//set parameter to defining data field
     {
         Shift shift = null;
-        String startShift = data.get("start").toString();
         PreparedStatement ps = null;
         ResultSet rs = null;
         
@@ -24,7 +23,7 @@ public class ShiftDAO {
             if (conn.isValid(0)) {
 
                 ps = conn.prepareStatement(QUERY);
-                ps.setString(1, startShift);//key
+                ps.setString(1, id);//key
 
                 boolean hasresults = ps.execute();
 
@@ -35,7 +34,8 @@ public class ShiftDAO {
                     while (rs.next()) {
 
                         String description = rs.getString("description");
-                        shift = new Shift(startShift, description);//key
+                        //idk man
+                        shift = new Shift();
 
                     }
 
