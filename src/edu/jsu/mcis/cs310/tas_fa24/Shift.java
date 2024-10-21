@@ -1,31 +1,43 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
+import java.time.*;
+import java.util.HashMap;
+
 public class Shift {
     
-    private final String id, description;
-
-    public Shift(String id, String description) {
-        this.id = id;
-        this.description = description;
+    private LocalTime startShift, endShift, lunchDuration, shiftDuration;
+    
+    public Shift(HashMap<String, LocalTime> data)
+    {
+        startShift = data.get("start");
+        endShift = data.get("end");
+        lunchDuration = data.get("lunch");
+        shiftDuration = data.get("shift");
     }
-
-    public String getId() {
-        return id;
+    
+    public HashMap getShift()
+    {   
+        HashMap<String, LocalTime> shiftData = new HashMap<>();
+        shiftData.put("start", startShift);
+        shiftData.put("end", endShift);
+        shiftData.put("lunch", lunchDuration);
+        shiftData.put("shift", shiftDuration);
+        return shiftData;
     }
-
-    public String getDescription() {
-        return description;
+    
+    public void setShift(HashMap<String, LocalTime> data)
+    {
+        startShift = data.get("start");
+        endShift = data.get("end");
+        lunchDuration = data.get("lunch");
+        shiftDuration = data.get("shift");
     }
-
+    
     @Override
-    public String toString() {
-
-        StringBuilder s = new StringBuilder();
-
-        s.append('#').append(id).append(' ');
-        s.append('(').append(description).append(')');
-
-        return s.toString();
-
+    public String toString()
+    {
+        String test = "Shift 1: ";
+        test += "Shift 1: " + startShift + " - " + endShift + " (" + shiftDuration + "); ";
+        return test;
     }
 }

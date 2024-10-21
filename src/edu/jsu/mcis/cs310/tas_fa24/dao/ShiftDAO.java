@@ -1,57 +1,18 @@
 package edu.jsu.mcis.cs310.tas_fa24.dao;
-import edu.jsu.mcis.cs310.tas_fa24.Badge;
+import edu.jsu.mcis.cs310.tas_fa24.Shift;
 import java.sql.*;
 import java.time.*;
 import java.util.HashMap;
 
 public class ShiftDAO {
-    private LocalTime startShift, endShift, lunchDuration, shiftDuration;
     
     private static final String QUERY = "";//find shift sql query here
-    
     private final DAOFactory daoFactory;
-
     
-    public ShiftDAO(HashMap<String, LocalTime> data, DAOFactory daoFactory)
+    public Shift find(HashMap<String, LocalTime> data)//set parameter to defining data field
     {
-        startShift = data.get("start");
-        endShift = data.get("end");
-        lunchDuration = data.get("lunch");
-        shiftDuration = data.get("shift");
-
-        
-        this.daoFactory = daoFactory;
-    }
-    
-    public HashMap getShift()
-    {   
-        HashMap<String, LocalTime> shiftData = new HashMap<>();
-        shiftData.put("start", startShift);
-        shiftData.put("end", endShift);
-        shiftData.put("lunch", lunchDuration);
-        shiftData.put("shift", shiftDuration);
-        return shiftData;
-    }
-    
-    public void setShift(HashMap<String, LocalTime> data)
-    {
-        startShift = data.get("start");
-        endShift = data.get("end");
-        lunchDuration = data.get("lunch");
-        shiftDuration = data.get("shift");
-    }
-    
-    @Override
-    public String toString()
-    {
-        String test = "Shift 1: ";
-        test += "Shift 1: " + startShift + " - " + endShift + " (" + shiftDuration + "); ";
-        return test;
-    }
-    
-    public ShiftDAO find()//set parameter to defining data field
-    {
-        Badge badge = null;
+        Shift shift = null;
+        String startShift = data.get("start").toString();
         PreparedStatement ps = null;
         ResultSet rs = null;
         
@@ -63,7 +24,7 @@ public class ShiftDAO {
             if (conn.isValid(0)) {
 
                 ps = conn.prepareStatement(QUERY);
-                ps.setString(1, id);//key
+                ps.setString(1, startShift);//key
 
                 boolean hasresults = ps.execute();
 
@@ -74,7 +35,7 @@ public class ShiftDAO {
                     while (rs.next()) {
 
                         String description = rs.getString("description");
-                        badge = new Badge(id, description);//key
+                        shift = new Shift(startShift, description);//key
 
                     }
 
@@ -105,7 +66,7 @@ public class ShiftDAO {
 
         }
 
-        return badge;
+        return shift;
     }
     
     
