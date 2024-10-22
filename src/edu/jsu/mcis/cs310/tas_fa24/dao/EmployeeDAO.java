@@ -26,7 +26,7 @@ public class EmployeeDAO {
         try{
             conn = daoFactory.getConnection();
             
-            String query = "SELECT * FROM department WHERE id = ?";
+            String query = "SELECT * FROM employee WHERE id = ?";
             ps = conn.prepareStatement(query);
             ps.setInt(1,id);
             rs = ps.executeQuery();
@@ -46,6 +46,39 @@ public class EmployeeDAO {
                 EmployeeType employeetype = EmployeeType.values()[rs.getInt("employeetypeid")];
                 
                 employee = new Employee(id, firstname, middlename, lastname, active, badge, department, shift, employeetype);
+                
+            }
+        }
+        
+        finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            
+        }
+        return employee;
+    }
+    
+    
+    
+    public Employee find(Badge badge) throws SQLException{
+        EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
+        String badge_id = badge.getId();
+        Employee employee = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        
+        try{
+            conn = daoFactory.getConnection();
+            
+            String query = "SELECT * FROM employee WHERE badgeid = ?";
+            ps = conn.prepareStatement(query);
+            ps.setString(1,badge_id);
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                int id = rs.getInt("id");
+                employee = employeeDAO.find(id);
                 
             }
         }
