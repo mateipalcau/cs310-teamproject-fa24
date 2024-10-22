@@ -64,17 +64,32 @@ public class DepartmentFindTest {
     }
 
     @Test
-    public void testFindDepartment4() {
+    public void testFindDepartment4() throws SQLException{
+
         DepartmentDAO departmentDAO = daoFactory.getDepartmentDAO();
 
         /* Retrieve Department from Database */
-
-        Department d4 = departmentDAO.find();
+        
+        Department d4 = departmentDAO.find(3);
 
         /* Compare to Expected Values */
+        
+        assertEquals("#3 (Warehouse), Terminal ID: 106", d4.toString());
 
-        assertEquals();
+    }
+    
+    @Test
+    public void testFindDepartment5() throws SQLException{
 
+        DepartmentDAO departmentDAO = daoFactory.getDepartmentDAO();
+
+        /* Retrieve Department from Database */
+        
+        Department d5 = departmentDAO.find(5);
+
+        /* Compare to Expected Values */
+        
+        assertEquals("#5 (Hafting), Terminal ID: 105", d5.toString());
 
     }
 
