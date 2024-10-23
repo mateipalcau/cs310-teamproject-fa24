@@ -84,6 +84,6 @@ public class EmployeeFindTest {
         EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
         Employee e5 = employeeDAO.find(9999);
         
-        assertNull("Badge/Employee does not exist",e5);
+        assertNull("Employee does not exist",e5);
     }
 }
