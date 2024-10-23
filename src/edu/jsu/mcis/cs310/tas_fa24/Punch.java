@@ -45,6 +45,9 @@ public class Punch {
     public EventType getPunchType() {
         return this.punchType;
     }
+    public LocalDateTime getOriginalTimestamp(){
+        return this.originalTimestamp;
+    }
 
     public String printOriginal() {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEE MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
