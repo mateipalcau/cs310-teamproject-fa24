@@ -5,39 +5,68 @@ import java.util.HashMap;
 
 public class Shift {
     
-    private LocalTime startShift, endShift, lunchDuration, shiftDuration;
-    
-    public Shift(HashMap<String, LocalTime> data)
-    {
-        startShift = data.get("start");
-        endShift = data.get("end");
-        lunchDuration = data.get("lunch");
-        shiftDuration = data.get("shift");
+    final private int id;
+    final private String description;
+    final private LocalTime startTime;
+    final private LocalTime stopTime;
+    final private LocalTime lunchStart;
+    final private LocalTime lunchStop;
+    final private int lunchDuration;
+    final private int shiftDuration;
+
+    public Shift(HashMap<String, String> shiftData) {
+        this.id = Integer.parseInt(shiftData.get("id"));
+        this.description = shiftData.get("description");
+        this.startTime = LocalTime.parse(shiftData.get("startTime"));
+        this.stopTime = LocalTime.parse(shiftData.get("stopTime"));
+        this.lunchStart = LocalTime.parse(shiftData.get("lunchStart"));
+        this.lunchStop = LocalTime.parse(shiftData.get("lunchStop"));
+        this.lunchDuration = Integer.parseInt(shiftData.get("lunchDuration"));
+        this.shiftDuration = Integer.parseInt(shiftData.get("shiftDuration"));
     }
-    
-    public HashMap getShift()
-    {   
-        HashMap<String, LocalTime> shiftData = new HashMap<>();
-        shiftData.put("start", startShift);
-        shiftData.put("end", endShift);
-        shiftData.put("lunch", lunchDuration);
-        shiftData.put("shift", shiftDuration);
-        return shiftData;
+
+    public int getId() {
+        return id;
     }
-    
-    public void setShift(HashMap<String, LocalTime> data)
-    {
-        startShift = data.get("start");
-        endShift = data.get("end");
-        lunchDuration = data.get("lunch");
-        shiftDuration = data.get("shift");
+
+    public String getDescription() {
+        return description;
     }
-    
-    @Override
-    public String toString()
-    {
-        String test = "Shift 1: ";
-        test += "Shift 1: " + startShift + " - " + endShift + " (" + shiftDuration + "); ";
-        return test;
+
+    public LocalTime getStartTime() {
+        return startTime;
     }
+
+    public LocalTime getStopTime() {
+        return stopTime;
+    }
+
+    public LocalTime getLunchStart() {
+        return lunchStart;
+    }
+
+    public LocalTime getLunchStop() {
+        return lunchStop;
+    }
+
+    public int getLunchDuration() {
+        return lunchDuration;
+    }
+
+    public int getShiftDuration() {
+        return shiftDuration;
+    }
+
+@Override
+public String toString() {
+    String shiftStart = startTime.toString();
+    String shiftEnd = stopTime.toString();
+    String lunchStartOutput = lunchStart.toString();
+    String lunchEnd = lunchStop.toString();
+
+    int lunchCalc = (int) Duration.between(lunchStart, lunchStop).toMinutes();
+    String result = description + ": " + shiftStart + " - " + shiftEnd + " (" + shiftDuration + " minutes); " + "Lunch: " + lunchStartOutput + " - " + lunchEnd + " (" + lunchCalc + " minutes)";
+
+    return result;
+}
 }
