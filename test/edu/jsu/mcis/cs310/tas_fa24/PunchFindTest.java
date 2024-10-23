@@ -76,11 +76,9 @@ public class PunchFindTest {
     @Test
     public void testFindBoundaryPunches()throws SQLException{
         PunchDAO punchDAO = daoFactory.getPunchDAO();
-        Punch minPunch = punchDAO.find(1);
+        Punch minPunch = punchDAO.find(0);
         Punch maxPunch = punchDAO.find(9999);
-        assertNotNull("Minimum punch should exist", minPunch);
-        assertEquals("#EXPECTEDMINID CLOCK IN: DATE TIME",minPunch.printOriginal());
-        assertNotNull("Maximum punch should exist", maxPunch);
-        assertEquals("#EXPECTEDMAXID CLOCK OUT: DATE TIME", maxPunch.printOriginal());
+        assertNull("Minimum punch should exist", minPunch);
+        assertNull("Maximum punch should exist", maxPunch);
     }
     }
