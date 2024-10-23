@@ -22,7 +22,7 @@ public class ShiftFindTest {
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
         /* Retrieve Shift Rulesets from Database */
-        
+        //These were ShiftDAO originally. I changed them to shift so they would work.
         Shift s1 = shiftDAO.find(1);
         Shift s2 = shiftDAO.find(2);
         Shift s3 = shiftDAO.find(3);

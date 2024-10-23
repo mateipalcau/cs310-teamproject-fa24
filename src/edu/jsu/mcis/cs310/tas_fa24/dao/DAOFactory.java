@@ -28,7 +28,7 @@ public final class DAOFactory {
 
     }
 
-    Connection getConnection() {
+    public Connection getConnection() {
         return conn;
     }
 
@@ -47,4 +47,3 @@ public final class DAOFactory {
     public EmployeeDAO getEmployeeDAO() {
         return new EmployeeDAO(this);
     }
-}
