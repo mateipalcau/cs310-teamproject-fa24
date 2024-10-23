@@ -1,6 +1,8 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Employee {
     final private int id;
@@ -54,7 +56,29 @@ public class Employee {
         return employeetype;
     }
     
-    //to do toString function
+    @Override
+    public String toString() {
+
+        StringBuilder s = new StringBuilder();
+
+        
+        s.append("ID #").append(Integer.toString(id)).append(": ");
+        s.append(lastname).append(", ").append(firstname).append(" ").append(middlename.substring(0,1)).append(" ");
+        s.append("(#").append(badge.getId()).append("), ");
+        s.append("Type: ").append(employeetype);
+        s.append(", Department: ");
+        s.append(department.getDescription());
+        s.append(", Active: ");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
+        String formattedDate = active.format(dateFormatter);
+        s.append(formattedDate);
+        
+        
+        
+
+        return s.toString();
+
+    }
     
     
 }

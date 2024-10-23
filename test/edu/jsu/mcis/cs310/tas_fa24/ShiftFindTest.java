@@ -1,6 +1,7 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 import edu.jsu.mcis.cs310.tas_fa24.dao.*;
+import java.sql.SQLException;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -16,15 +17,15 @@ public class ShiftFindTest {
     }
 
     @Test
-    public void testFindShiftByID1() {
+    public void testFindShiftByID1() throws SQLException {
 
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
         /* Retrieve Shift Rulesets from Database */
         
-        ShiftDAO s1 = shiftDAO.find(1);
-        ShiftDAO s2 = shiftDAO.find(2);
-        ShiftDAO s3 = shiftDAO.find(3);
+        Shift s1 = shiftDAO.find(1);
+        Shift s2 = shiftDAO.find(2);
+        Shift s3 = shiftDAO.find(3);
 
         /* Compare to Expected Values */
         
@@ -35,7 +36,7 @@ public class ShiftFindTest {
     }
 
     @Test
-    public void testFindShiftByBadge1() {
+    public void testFindShiftByBadge1() throws SQLException {
 
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
@@ -48,9 +49,9 @@ public class ShiftFindTest {
 
         /* Retrieve Shift Rulesets from Database */
         
-        ShiftDAO s1 = shiftDAO.find(b1);
-        ShiftDAO s2 = shiftDAO.find(b2);
-        ShiftDAO s3 = shiftDAO.find(b3);
+        Shift s1 = shiftDAO.find(b1);
+        Shift s2 = shiftDAO.find(b2);
+        Shift s3 = shiftDAO.find(b3);
 
         /* Compare to Expected Values */
         

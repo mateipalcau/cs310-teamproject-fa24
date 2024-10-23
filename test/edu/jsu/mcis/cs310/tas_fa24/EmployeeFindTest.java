@@ -1,6 +1,7 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 import edu.jsu.mcis.cs310.tas_fa24.dao.*;
+import java.sql.SQLException;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -16,7 +17,7 @@ public class EmployeeFindTest {
     }
 
     @Test
-    public void testFindEmployee1() {
+    public void testFindEmployee1() throws SQLException {
         
         EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
 
@@ -31,7 +32,7 @@ public class EmployeeFindTest {
     }
     
     @Test
-    public void testFindEmployee2() {
+    public void testFindEmployee2() throws SQLException {
         
         EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
@@ -48,7 +49,7 @@ public class EmployeeFindTest {
     }
     
     @Test
-    public void testFindEmployee3() {
+    public void testFindEmployee3() throws SQLException {
         
         EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
 
@@ -63,7 +64,7 @@ public class EmployeeFindTest {
     }
     
     @Test
-    public void testFindEmployee4() {
+    public void testFindEmployee4() throws SQLException {
         
         EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
