@@ -66,7 +66,7 @@ public class PunchDAO {
                 
   
         
-        if(punch_terminalid == 0){
+        if(punch_terminalid == 0 || punch_terminalid == department_id){
             
             PreparedStatement ps = null;
             ResultSet rs = null;
@@ -80,9 +80,9 @@ public class PunchDAO {
                     ps.setString(2, badge_id);
                     ps.setTimestamp(3, Timestamp.valueOf(punch.getOriginalTimestamp()));
                             //ps.setInt(4, punch.getPunchType().toString());
-                    if(punch.getPunchType().toString().compareToIgnoreCase("Clock-Out Punch")==0){
+                    if(punch.getPunchType().toString().compareToIgnoreCase("Clock OUT")==0){
                         ps.setInt(4, 0);
-                    }else if(punch.getPunchType().toString().compareToIgnoreCase("Clock-In Punch")==0){
+                    }else if(punch.getPunchType().toString().compareToIgnoreCase("CLOCK IN")==0){
                         ps.setInt(4, 1);
                     }else{
                         ps.setInt(4, 2);
@@ -112,53 +112,8 @@ public class PunchDAO {
             
             
         }else{
-                if(punch_terminalid == department_id){
-                    //insert punch in database
-                    PreparedStatement ps = null;
-                    ResultSet rs = null;
-                    
-                    try{
-                        Connection conn = daoFactory.getConnection();
-                        
-                        if(conn.isValid(0)){
-                            ps = conn.prepareStatement(QUERY_CREATE,Statement.RETURN_GENERATED_KEYS);
-                            ps.setInt(1, punch_terminalid);
-                            ps.setString(2, badge_id);
-                            ps.setTimestamp(3, Timestamp.valueOf(punch.getOriginalTimestamp()));
-                            //ps.setInt(4, punch.getPunchType().toString());
-                            if(punch.getPunchType().toString().compareToIgnoreCase("Clock-Out Punch")==0){
-                                ps.setInt(4, 0);
-                            }else if(punch.getPunchType().toString().compareToIgnoreCase("Clock-In Punch")==0){
-                                ps.setInt(4, 1);
-                            }else{
-                                ps.setInt(4, 2);
-                            }
-                            
-                            int updateCount = ps.executeUpdate();
-                            
-                            if (updateCount > 0){
-                                rs = ps.getGeneratedKeys();
-                                
-                                if (rs.next()){
-                                    result = rs.getInt(1);
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception e) { e.printStackTrace(); }
-        
-                    finally {
-            
-                       if (rs != null) { try { rs.close(); } catch (Exception e) { e.printStackTrace(); } }
-                       if (ps != null) { try { ps.close(); } catch (Exception e) { e.printStackTrace(); } }
-            
-                    }
-                }else{
-                    result = 0;
-                }
-                
-                
-            
+             result = 0;
+
         } 
         return result;
         

@@ -36,7 +36,8 @@ public class Main {
         System.err.println("Test Shift: " + s.toString());
         System.err.println("Test Employee: " + e.toString());
         System.err.println("Test Punch Create: " + punchid);
-        System.err.println("Test Punch Create: " + p1.toString());
+        System.err.println("Test Punch Create: " + p1.printOriginal());
+        System.err.println("Test Punch Create: " + p.printOriginal());
 
     }
 
