@@ -1,6 +1,7 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 import edu.jsu.mcis.cs310.tas_fa24.dao.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.*;
@@ -18,7 +19,7 @@ public class PunchCreateTest {
     }
 
     @Test
-    public void testCreatePunch1() {
+    public void testCreatePunch1() throws SQLException {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -36,9 +37,9 @@ public class PunchCreateTest {
         /* Get Punch Properties */
         
         String badgeid = p1.getBadge().getId();
-        ots = p1.getOriginaltimestamp();
-        int terminalid = p1.getTerminalid();
-        EventType punchtype = p1.getPunchtype();
+        ots = p1.getOriginalTimestamp();
+        int terminalid = p1.getTerminalId();
+        EventType punchtype = p1.getPunchType();
 
         /* Insert Punch Into Database */
         
@@ -52,10 +53,10 @@ public class PunchCreateTest {
         
         assertEquals(badgeid, p2.getBadge().getId());
 
-        rts = p2.getOriginaltimestamp();
+        rts = p2.getOriginalTimestamp();
 
-        assertEquals(terminalid, p2.getTerminalid());
-        assertEquals(punchtype, p2.getPunchtype());
+        assertEquals(terminalid, p2.getTerminalId());
+        assertEquals(punchtype, p2.getPunchType());
         assertEquals(ots.format(dtf), rts.format(dtf));
 
     }

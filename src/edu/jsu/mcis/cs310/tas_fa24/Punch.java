@@ -17,7 +17,7 @@ public class Punch {
         this.terminalid = terminalid;
         this.badge = badge;
         this.punchType = punchType;
-        this.originalTimestamp = LocalDateTime.now();  
+        this.originalTimestamp = LocalDateTime.now().withSecond(0).withNano(0);  
         this.adjustedTimestamp = null;  
     }
     
@@ -44,6 +44,9 @@ public class Punch {
 
     public EventType getPunchType() {
         return this.punchType;
+    }
+    public LocalDateTime getOriginalTimestamp(){
+        return this.originalTimestamp;
     }
 
     public String printOriginal() {
