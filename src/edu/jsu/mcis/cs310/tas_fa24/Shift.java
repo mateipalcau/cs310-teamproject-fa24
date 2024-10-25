@@ -48,7 +48,13 @@ public class Shift {
         s.append(description).append(": ");
         int time;
         s.append(shiftstart.toString()).append(" - ").append(shiftend.toString()).append(" ");
-        time=((shiftend.getHour()-shiftstart.getHour())*60)+shiftend.getMinute()-shiftstart.getMinute();
+        if(shiftend.getHour() < shiftstart.getHour()) {
+            time=((shiftend.getHour()-shiftstart.getHour())*60)+shiftend.getMinute()-shiftstart.getMinute()+1440;
+            //Look at changing this to a chronounit
+        }else{
+            time=((shiftend.getHour()-shiftstart.getHour())*60)+shiftend.getMinute()-shiftstart.getMinute();
+        }
+        
         s.append("(").append(Integer.toString(time)).append(" minutes)").append("; ");
         s.append("Lunch: ").append(startlunch.toString()).append(" - ").append(endlunch.toString()).append(" ");
         int time2;

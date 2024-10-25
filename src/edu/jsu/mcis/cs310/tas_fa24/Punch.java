@@ -52,7 +52,7 @@ public class Punch {
     public String printOriginal() {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEE MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
         String formattedDate = originalTimestamp.format(dateFormatter);
-        //All thgis is doing is casting the Day to uppercase. It defaults to Ull instead of UUU 
+        //All this is doing is casting the Day to uppercase. It defaults to Ull instead of UUU 
         return String.format("#%s %s: %s", badge.getId(), punchType, formattedDate.substring(0, 3).toUpperCase() + formattedDate.substring(3));
 }
 

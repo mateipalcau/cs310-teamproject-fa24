@@ -66,8 +66,8 @@ public class ShiftFindTest {
         Shift s = shiftDAO.find(9999);      
         assertNull(s);
 
-}
- @Test
+    }
+    @Test
     public void testFindShiftByInvalidBadge() throws SQLException{
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();       
@@ -79,4 +79,12 @@ public class ShiftFindTest {
             assertNull(s);
         }
     }
+    @Test
+    public void testFindShift() throws SQLException {
+        ShiftDAO shiftDAO = daoFactory.getShiftDAO();
+        Shift s4 = shiftDAO.find(4);
+        assertEquals("Shift 3: 22:30 - 07:00 (510 minutes); Lunch: 02:30 - 03:00 (30 minutes)", s4.toString());
+
+    }
 }
+
