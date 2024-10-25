@@ -59,5 +59,23 @@ public class ShiftFindTest {
         assertEquals("Shift 1 Early Lunch: 07:00 - 15:30 (510 minutes); Lunch: 11:30 - 12:00 (30 minutes)", s3.toString());
 
     }
+    @Test
+    public void testFindShiftByIDNotFound() {
+        ShiftDAO shiftDAO = daoFactory.getShiftDAO();
+        Shift s = shiftDAO.find(9999);      
+        assertNull(s);
 
+}
+ @Test
+    public void testFindShiftByInvalidBadge() {
+        ShiftDAO shiftDAO = daoFactory.getShiftDAO();
+        BadgeDAO badgeDAO = daoFactory.getBadgeDAO();       
+        Badge invalidBadge = badgeDAO.find("INVALID");
+        assertNull(invalidBadge);
+
+        if (invalidBadge != null) {
+            Shift s = shiftDAO.find(invalidBadge);
+            assertNull(s);
+        }
+    }
 }
