@@ -37,7 +37,7 @@ public class PunchDAO {
                 int terminalId = rs.getInt("terminalid");
                 BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
                 Badge badge = badgeDAO.find(rs.getString("badgeid"));
-                LocalDateTime originalTimestamp = rs.getTimestamp("timestamp").toLocalDateTime();
+                LocalDateTime originalTimestamp = rs.getTimestamp("timestamp").toLocalDateTime().withSecond(0).withNano(0);
                 EventType punchType = EventType.values()[rs.getInt("eventtypeid")];
 
                 punch = new Punch(id, terminalId, badge, originalTimestamp, punchType);
