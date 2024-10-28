@@ -56,10 +56,11 @@ public class BadgeFindTest {
 
         /* Compare to Expected Values */
         
-        assertEquals("#D2CC71D4 (Lawson, Matthew J)", b3.toString())
+        assertEquals("#D2CC71D4 (Lawson, Matthew J)", b3.toString());
 
     }
 
+    @Test
     public void testFindBadge4() {
         
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
@@ -70,10 +71,11 @@ public class BadgeFindTest {
 
         /* Compare to Expected Values */
         
-        assertEquals("#FF591F68 (Miller, Robert K)", b4.toString())
+        assertEquals("#FF591F68 (Miller, Robert K)", b4.toString());
 
     }
 
+    @Test
     public void testFindBadge5() {
         
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
@@ -84,7 +86,7 @@ public class BadgeFindTest {
 
         /* Compare to Expected Values */
         
-        assertEquals("#021890C0 (Chapell, George R)", b5.toString())
+        assertEquals("#021890C0 (Chapell, George R)", b5.toString());
 
     }
     
