@@ -9,6 +9,7 @@ import edu.jsu.mcis.cs310.tas_fa24.Punch;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashMap;
 
 public class ShiftDAO {
     
@@ -33,13 +34,22 @@ public class ShiftDAO {
             rs = ps.executeQuery();
             
             if(rs.next()){
-                String description = rs.getString("description");
-                LocalTime shiftstart = rs.getTime("shiftstart").toLocalTime();
-                LocalTime shiftend = rs.getTime("shiftstop").toLocalTime();
-                LocalTime lunchstart = rs.getTime("lunchstart").toLocalTime();
-                LocalTime endlunch = rs.getTime("lunchstop").toLocalTime();
+                HashMap<String, String> shiftData = new HashMap<>();
+                shiftData.put("id", Integer.toString(rs.getInt("id")));
+                shiftData.put("description", rs.getString("description"));
+                shiftData.put("shiftstart", rs.getString("shiftstart"));
+                shiftData.put("shiftstop", rs.getString("shiftstop"));
+                shiftData.put("roundinterval", Integer.toString(rs.getInt("roundinterval")));
+                shiftData.put("graceperiod", Integer.toString(rs.getInt("graceperiod")));
+                shiftData.put("dockpenalty", Integer.toString(rs.getInt("dockpenalty")));
+                shiftData.put("lunchstart", rs.getString("lunchstart"));
+                shiftData.put("lunchstop", rs.getString("lunchstop"));
+                shiftData.put("lunchthreshhold", Integer.toString(rs.getInt("lunchthreshold")));
+                shift = new Shift(shiftData);
                 
-                shift = new Shift(id, description, shiftstart, shiftend, lunchstart, endlunch);
+
+
+                
             }
         }
         finally {
@@ -78,5 +88,9 @@ public class ShiftDAO {
             
         }
         return shift;
+    }
+    private String calculateShiftDuration(Time start, Time stop) {
+        int duration = (int)((stop.getTime() - start.getTime()) / (1000 * 60));
+        return Integer.toString(duration);
     }
 }
