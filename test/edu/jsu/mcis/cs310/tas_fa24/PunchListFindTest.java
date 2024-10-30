@@ -1,6 +1,7 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 import edu.jsu.mcis.cs310.tas_fa24.dao.*;
+import java.sql.SQLException;
 import java.time.*;
 import java.util.ArrayList;
 import org.junit.*;
@@ -18,7 +19,7 @@ public class PunchListFindTest {
     }
 
     @Test
-    public void testFindPunchList1() {
+    public void testFindPunchList1() throws SQLException {
 
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
         PunchDAO punchDAO = daoFactory.getPunchDAO();
@@ -69,7 +70,7 @@ public class PunchListFindTest {
     }
 
     @Test
-    public void testFindPunchList2() {
+    public void testFindPunchList2() throws SQLException {
 
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
         PunchDAO punchDAO = daoFactory.getPunchDAO();
@@ -121,7 +122,7 @@ public class PunchListFindTest {
     }
 
     @Test
-    public void testFindPunchList3() {
+    public void testFindPunchList3() throws SQLException {
 
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
         PunchDAO punchDAO = daoFactory.getPunchDAO();
