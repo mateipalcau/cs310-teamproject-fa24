@@ -61,6 +61,44 @@ public class Punch {
             return "Adjusted timestamp not available.";
         }
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEE MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
-        return String.format("#%s %s: %s", badge.getId(), punchType, adjustedTimestamp.format(dateFormatter));
+        String formattedDate = adjustedTimestamp.format(dateFormatter);
+        return String.format("#%s %s: %s", badge.getId(), punchType, formattedDate.substring(0, 3).toUpperCase() + formattedDate.substring(3));
+    }
+    
+    public void adjust(Shift s){
+        LocalDateTime adjust = null;
+        adjust = this.originalTimestamp;
+        
+        
+        
+        
+        if(this.originalTimestamp.toLocalTime().compareTo(s.getShiftStart())<0 && this.originalTimestamp.toLocalTime().plusMinutes(s.getRoundInterval()).compareTo(s.getShiftStart())>0){
+            adjust = adjust.withHour(s.getShiftStart().getHour());
+            adjust = adjust.withMinute(s.getShiftStart().getMinute());
+            adjust = adjust.withSecond(s.getShiftStart().getSecond());
+        }else if(this.originalTimestamp.toLocalTime().compareTo(s.getShiftStop())>0 && this.originalTimestamp.toLocalTime().minusMinutes(s.getRoundInterval()).compareTo(s.getShiftStop())<0){
+            adjust = adjust.withHour(s.getShiftStop().getHour());
+            adjust = adjust.withMinute(s.getShiftStop().getMinute());
+            adjust = adjust.withSecond(s.getShiftStop().getSecond());
+        }else if(this.punchType.toString().compareTo("CLOCK OUT") == 0 && this.originalTimestamp.toLocalTime().compareTo(s.getLunchStart())>0 && this.originalTimestamp.toLocalTime().compareTo(s.getLunchStop())<0){
+            adjust = adjust.withHour(s.getLunchStart().getHour());
+            adjust = adjust.withMinute(s.getLunchStart().getMinute());
+            adjust = adjust.withSecond(s.getLunchStart().getSecond());
+        }else if(this.punchType.toString().compareTo("CLOCK IN") == 0 && this.originalTimestamp.toLocalTime().compareTo(s.getLunchStart())>0 && this.originalTimestamp.toLocalTime().compareTo(s.getLunchStop())<0){
+            adjust = adjust.withHour(s.getLunchStop().getHour());
+            adjust = adjust.withMinute(s.getLunchStop().getMinute());
+            adjust = adjust.withSecond(s.getLunchStop().getSecond());
+        }else if(this.punchType.toString().compareTo("CLOCK IN") == 0 && this.originalTimestamp.toLocalTime().compareTo(s.getShiftStart())>0 && this.originalTimestamp.toLocalTime().minusMinutes(s.getGracePeriod()).compareTo(s.getShiftStart())<0){
+            adjust = adjust.withHour(s.getShiftStart().getHour());
+            adjust = adjust.withMinute(s.getShiftStart().getMinute());
+            adjust = adjust.withSecond(s.getShiftStart().getSecond());
+        }else if(this.punchType.toString().compareTo("CLOCK OUT") == 0 && this.originalTimestamp.toLocalTime().compareTo(s.getShiftStop())<0 && this.originalTimestamp.toLocalTime().plusMinutes(s.getGracePeriod()).compareTo(s.getShiftStop())>0){
+            adjust = adjust.withHour(s.getShiftStop().getHour());
+            adjust = adjust.withMinute(s.getShiftStop().getMinute());
+            adjust = adjust.withSecond(s.getShiftStop().getSecond());
+        }
+        
+        this.adjustedTimestamp = adjust;
+        
     }
 }
