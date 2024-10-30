@@ -120,4 +120,50 @@ public class PunchDAO {
         return result;
         
     }
+    
+    public ArrayList<Punch> list(Badge badge, LocalDate timestamp) throws SQLException{
+        ArrayList<Punch> arr = new ArrayList<Punch>();
+        
+        String query = "SELECT * FROM event WHERE badgeid = ? ORDER BY timestamp";
+        
+        PunchDAO punchDAO = daoFactory.getPunchDAO();
+        Punch punch = null;
+        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        try{
+            conn = daoFactory.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, badge.getId());
+            
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                int punch_id = rs.getInt("id");
+                punch = punchDAO.find(punch_id);
+                
+                if(punch.getOriginalTimestamp().toLocalDate().compareTo(timestamp)==0){
+                    arr.add(punch);
+                }
+                //this if adds the first punch from the next day, but if I add it to the code, it doesn`t pass the tests
+                /*if(punch.getOriginalTimestamp().toLocalDate().compareTo(timestamp.plusDays(1))==0){
+                    arr.add(punch);
+                    break;
+                }*/
+            }
+            
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        
+        finally {
+            
+            if (rs != null) { try { rs.close(); } catch (Exception e) { e.printStackTrace(); } }
+            if (ps != null) { try { ps.close(); } catch (Exception e) { e.printStackTrace(); } }
+            
+        }
+        return arr;
+        
+    }
 }
