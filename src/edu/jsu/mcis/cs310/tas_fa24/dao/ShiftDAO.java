@@ -1,14 +1,8 @@
 package edu.jsu.mcis.cs310.tas_fa24.dao;
 
 import edu.jsu.mcis.cs310.tas_fa24.Badge;
-import edu.jsu.mcis.cs310.tas_fa24.Employee;
 import edu.jsu.mcis.cs310.tas_fa24.Shift;
-import edu.jsu.mcis.cs310.tas_fa24.Department;
-import edu.jsu.mcis.cs310.tas_fa24.EmployeeType;
-import edu.jsu.mcis.cs310.tas_fa24.Punch;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashMap;
 
 public class ShiftDAO {
@@ -33,7 +27,7 @@ public class ShiftDAO {
             ps.setInt(1,id);
             rs = ps.executeQuery();
             
-            if(rs.next()){
+            if (rs.next()) {
                 HashMap<String, String> shiftData = new HashMap<>();
                 shiftData.put("id", Integer.toString(rs.getInt("id")));
                 shiftData.put("description", rs.getString("description"));
@@ -44,14 +38,11 @@ public class ShiftDAO {
                 shiftData.put("dockpenalty", Integer.toString(rs.getInt("dockpenalty")));
                 shiftData.put("lunchstart", rs.getString("lunchstart"));
                 shiftData.put("lunchstop", rs.getString("lunchstop"));
-                shiftData.put("lunchthreshhold", Integer.toString(rs.getInt("lunchthreshold")));
+                shiftData.put("lunchthreshold", Integer.toString(rs.getInt("lunchthreshold")));
+    
                 shift = new Shift(shiftData);
-                
-
-
-                
-            }
-        }
+}
+}
         finally {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
@@ -88,9 +79,5 @@ public class ShiftDAO {
             
         }
         return shift;
-    }
-    private String calculateShiftDuration(Time start, Time stop) {
-        int duration = (int)((stop.getTime() - start.getTime()) / (1000 * 60));
-        return Integer.toString(duration);
     }
 }

@@ -1,6 +1,7 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
 public class Shift {
@@ -24,15 +25,20 @@ public class Shift {
         this.shiftstart = LocalTime.parse(shiftData.get("shiftstart"));
         this.shiftstop = LocalTime.parse(shiftData.get("shiftstop"));
         this.lunchstart = LocalTime.parse(shiftData.get("lunchstart"));
-        this.lunchstop = LocalTime.parse(shiftData.get("lunchStop"));
-        this.lunchduration = Integer.parseInt(shiftData.get("lunchDuration"));
-        this.shiftduration = Integer.parseInt(shiftData.get("shiftDuration"));
-        this.roundinterval = Integer.parseInt(shiftData.get("roundInterval"));
-        this.graceperiod = Integer.parseInt(shiftData.get("gracePeriod"));
-        this.dockpenalty = Integer.parseInt(shiftData.get("dockpenalty"));
-        this.lunchthreshold = Integer.parseInt(shiftData.get("lunchthreshold"));   
-    }
+        this.lunchstop = LocalTime.parse(shiftData.get("lunchstop"));
     
+        this.lunchduration = (int) ChronoUnit.MINUTES.between(lunchstart, lunchstop);
+        long duration = ChronoUnit.MINUTES.between(shiftstart, shiftstop);
+        if (duration < 0) { //If the stop time is on the next day
+            duration += 1440; //Adds 24 hours
+        }
+        this.shiftduration = (int) duration;
+        
+        this.roundinterval = Integer.parseInt(shiftData.get("roundinterval"));
+        this.graceperiod = Integer.parseInt(shiftData.get("graceperiod"));
+        this.dockpenalty = Integer.parseInt(shiftData.get("dockpenalty"));
+        this.lunchthreshold = Integer.parseInt(shiftData.get("lunchthreshold"));
+    }
     public int getId(){
         return id;
     }
@@ -61,31 +67,14 @@ public class Shift {
         return lunchstop;
     }
    
-    @Override
+        @Override
     public String toString() {
-
         StringBuilder s = new StringBuilder();
-
-        
         s.append(description).append(": ");
-        int time;
         s.append(shiftstart.toString()).append(" - ").append(shiftstop.toString()).append(" ");
-        if(shiftstop.getHour() < shiftstart.getHour()) {
-            time=((shiftstop.getHour()-shiftstart.getHour())*60)+shiftstop.getMinute()-shiftstart.getMinute()+1440;
-            //Look at changing this to a chronounit
-        }else{
-            time=((shiftstop.getHour()-shiftstart.getHour())*60)+shiftstop.getMinute()-shiftstart.getMinute();
-        }
-        
-        s.append("(").append(Integer.toString(time)).append(" minutes)").append("; ");
+        s.append("(").append(shiftduration).append(" minutes)").append("; ");
         s.append("Lunch: ").append(lunchstart.toString()).append(" - ").append(lunchstop.toString()).append(" ");
-        int time2;
-        time2=((lunchstop.getHour()-lunchstart.getHour())*60)+lunchstop.getMinute()-lunchstart.getMinute();
-        s.append("(").append(Integer.toString(time2)).append(" minutes)");
-        
-        
-
+        s.append("(").append(lunchduration).append(" minutes)");
         return s.toString();
-
     }
 }
