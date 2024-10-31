@@ -62,7 +62,7 @@ public class PunchCreateTest {
     }
 
     @Test
-    public void testCreatePunch1() throws SQLException {
+    public void testCreatePunch2() throws SQLException {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -70,37 +70,37 @@ public class PunchCreateTest {
         BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
 
         /* Create New Punch Object */
-        
-        Punch p3 = new Punch(103, badgeDAO.find("29C03912"), EventType.CLOCK_IN);
+    
+        Punch p3 = new Punch(104, badgeDAO.find("29C03912"), EventType.CLOCK_IN);
 
         /* Create Timestamp Objects */
-        
+    
         LocalDateTime ots, rts;
 
         /* Get Punch Properties */
-        
-        String badgeid = p1.getBadge().getId();
-        ots = p1.getOriginalTimestamp();
-        int terminalid = p1.getTerminalId();
-        EventType punchtype = p1.getPunchType();
+    
+        String badgeid = p3.getBadge().getId();
+        ots = p3.getOriginalTimestamp();
+        int terminalid = p3.getTerminalId();
+        EventType punchtype = p3.getPunchType();
 
         /* Insert Punch Into Database */
-        
-        int punchid = punchDAO.create(p1);
-
+    
+        int punchid = punchDAO.create(p3);
+        assertNotEquals("Punch ID should not be 0", 0, punchid);         
         /* Retrieve New Punch */
-        
-        Punch p2 = punchDAO.find(punchid);
-
+    
+        Punch p4 = punchDAO.find(punchid);
+        assertNotNull("Punch should be found in database", p4);
+ 
         /* Compare Punches */
-        
-        assertEquals(badgeid, p2.getBadge().getId());
+    
+        assertEquals(badgeid, p3.getBadge().getId());
 
-        rts = p2.getOriginalTimestamp();
+        rts = p4.getOriginalTimestamp();
 
-        assertEquals(terminalid, p2.getTerminalId());
-        assertEquals(punchtype, p2.getPunchType());
+        assertEquals(terminalid, p4.getTerminalId());
+        assertEquals(punchtype, p4.getPunchType());
         assertEquals(ots.format(dtf), rts.format(dtf));
-
-    }
+}
 }
