@@ -1,6 +1,7 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 import edu.jsu.mcis.cs310.tas_fa24.dao.*;
+import java.sql.SQLException;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -16,14 +17,14 @@ public class PunchAdjustTest {
     }
 
     @Test
-    public void testAdjustPunchesShift1Weekday() {
+    public void testAdjustPunchesShift1Weekday() throws SQLException {
 
         /* Get Shift Ruleset and Punch Data */
         
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        ShiftDAO s1 = shiftDAO.find(1);
+        Shift s1 = shiftDAO.find(1);
 
         Punch p1 = punchDAO.find(3634);
         Punch p2 = punchDAO.find(3687);
@@ -54,14 +55,14 @@ public class PunchAdjustTest {
     }
 
     @Test
-    public void testAdjustPunchesShift1Weekend() {
+    public void testAdjustPunchesShift1Weekend() throws SQLException {
 
         /* Get Shift Ruleset and Punch Data */
         
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        ShiftDAO s1 = shiftDAO.find(1);
+        Shift s1 = shiftDAO.find(1);
 
         Punch p1 = punchDAO.find(1087);
         Punch p2 = punchDAO.find(1162);
@@ -82,14 +83,14 @@ public class PunchAdjustTest {
     }
 
     @Test
-    public void testAdjustPunchesShift2Weekday() {
+    public void testAdjustPunchesShift2Weekday() throws SQLException {
 
         /* Get Shift Ruleset and Punch Data */
         
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        ShiftDAO s2 = shiftDAO.find(2);
+        Shift s2 = shiftDAO.find(2);
 
         Punch p1 = punchDAO.find(4943);
         Punch p2 = punchDAO.find(5004);
@@ -110,14 +111,14 @@ public class PunchAdjustTest {
     }
 
     @Test
-    public void testAdjustPunchesShift2Weekend() {
+    public void testAdjustPunchesShift2Weekend() throws SQLException {
 
         /* Get Shift Ruleset and Punch Data */
         
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        ShiftDAO s2 = shiftDAO.find(2);
+        Shift s2 = shiftDAO.find(2);
 
         Punch p1 = punchDAO.find(5463);
         Punch p2 = punchDAO.find(5541);
@@ -138,14 +139,14 @@ public class PunchAdjustTest {
     }
 
     @Test
-    public void testAdjustPunchesShift1SpecialCases() {
+    public void testAdjustPunchesShift1SpecialCases() throws SQLException {
 
         /* Get Shift Ruleset and Punch Data */
         
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
 
-        ShiftDAO s1 = shiftDAO.find(1);
+        Shift s1 = shiftDAO.find(1);
 
         Punch p1 = punchDAO.find(151);  // Interval Adjustment Before Shift (In)
         Punch p2 = punchDAO.find(2439); // Grace Period (In)
