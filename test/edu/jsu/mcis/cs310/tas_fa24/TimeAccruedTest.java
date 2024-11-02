@@ -1,6 +1,7 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 import edu.jsu.mcis.cs310.tas_fa24.dao.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -17,20 +18,20 @@ public class TimeAccruedTest {
     }
 
     @Test
-    public void testMinutesAccruedShift1Weekday() {
+    public void testMinutesAccruedShift1Weekday() throws SQLException{
         
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
-
+ 
         /* Get Punch/Badge/Shift Objects */
 
         Punch p = punchDAO.find(3634);
         Badge b = p.getBadge();
-        ShiftDAO s = shiftDAO.find(b);
+        Shift s = shiftDAO.find(b);
         
         /* Get/Adjust Punch List */
 
-        ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginaltimestamp().toLocalDate());
+        ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginalTimestamp().toLocalDate());
 
         for (Punch punch : dailypunchlist) {
             punch.adjust(s);
@@ -47,7 +48,7 @@ public class TimeAccruedTest {
     }
 
     @Test
-    public void testMinutesAccruedShift1WeekdayWithTimeout() {
+    public void testMinutesAccruedShift1WeekdayWithTimeout() throws SQLException{
         
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
@@ -56,11 +57,11 @@ public class TimeAccruedTest {
 
         Punch p = punchDAO.find(436);
         Badge b = p.getBadge();
-        ShiftDAO s = shiftDAO.find(b);
+        Shift s = shiftDAO.find(b);
         
         /* Get/Adjust Punch List */
 
-        ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginaltimestamp().toLocalDate());
+        ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginalTimestamp().toLocalDate());
 
         for (Punch punch : dailypunchlist) {
             punch.adjust(s);
@@ -77,7 +78,7 @@ public class TimeAccruedTest {
     }
 
     @Test
-    public void testMinutesAccruedShift1Weekend() {
+    public void testMinutesAccruedShift1Weekend() throws SQLException{
         
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
@@ -86,11 +87,11 @@ public class TimeAccruedTest {
 
         Punch p = punchDAO.find(1087);
         Badge b = p.getBadge();
-        ShiftDAO s = shiftDAO.find(b);
+        Shift s = shiftDAO.find(b);
         
         /* Get/Adjust Punch List */
 
-        ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginaltimestamp().toLocalDate());
+        ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginalTimestamp().toLocalDate());
 
         for (Punch punch : dailypunchlist) {
             punch.adjust(s);
@@ -107,7 +108,7 @@ public class TimeAccruedTest {
     }
 
     @Test
-    public void testMinutesAccruedShift2Weekday() {
+    public void testMinutesAccruedShift2Weekday() throws SQLException{
         
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         ShiftDAO shiftDAO = daoFactory.getShiftDAO();
@@ -116,11 +117,11 @@ public class TimeAccruedTest {
 
         Punch p = punchDAO.find(4943);
         Badge b = p.getBadge();
-        ShiftDAO s = shiftDAO.find(b);
+        Shift s = shiftDAO.find(b);
         
         /* Get/Adjust Punch List */
 
-        ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginaltimestamp().toLocalDate());
+        ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginalTimestamp().toLocalDate());
 
         for (Punch punch : dailypunchlist) {
             punch.adjust(s);

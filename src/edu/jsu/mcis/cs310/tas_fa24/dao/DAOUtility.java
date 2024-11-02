@@ -5,7 +5,9 @@ import java.util.*;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import com.github.cliftonlabs.json_simple.*;
+import edu.jsu.mcis.cs310.tas_fa24.EventType;
 import edu.jsu.mcis.cs310.tas_fa24.Punch;
+import edu.jsu.mcis.cs310.tas_fa24.Shift;
 
 /**
  * 
@@ -36,5 +38,31 @@ public final class DAOUtility {
             jsonData.add(punchData);
         }
         return Jsoner.serialize(jsonData);
+    }
+    public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift) {
+        int totalMinutes = 0;
+        boolean clockInFound = false;
+        Punch clockInPunch = null;
+
+        for (Punch punch : dailypunchlist) {
+            if (punch.getPunchType() == EventType.CLOCK_IN) {
+                clockInPunch = punch;
+                clockInFound = true;
+            } 
+            else if (punch.getPunchType() == EventType.CLOCK_OUT && clockInFound) {
+                int minutesWorked = (int) Duration.between(clockInPunch.getAdjustedTimestamp(), punch.getAdjustedTimestamp()).toMinutes();
+                totalMinutes += minutesWorked;
+                clockInFound = false;
+            } 
+            else if (punch.getPunchType() == EventType.TIME_OUT) {
+                clockInFound = false;
+            }
+        }
+
+        if (totalMinutes > shift.getLunchThreshold()) {
+            totalMinutes -= shift.getLunchDuration();
+        }
+
+        return totalMinutes;
     }
 }
