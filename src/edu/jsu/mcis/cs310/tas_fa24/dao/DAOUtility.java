@@ -50,7 +50,7 @@ public final class DAOUtility {
                 clockInFound = true;
             } 
             else if (punch.getPunchType() == EventType.CLOCK_OUT && clockInFound) {
-                int minutesWorked = (int) Duration.between(clockInPunch.getAdjustedTimestamp(), punch.getAdjustedTimestamp()).toMinutes();
+                int minutesWorked = (int) ChronoUnit.MINUTES.between(clockInPunch.getAdjustedTimestamp(), punch.getAdjustedTimestamp());
                 totalMinutes += minutesWorked;
                 clockInFound = false;
             } 
@@ -58,11 +58,29 @@ public final class DAOUtility {
                 clockInFound = false;
             }
         }
-
-        if (totalMinutes > shift.getLunchThreshold()) {
+        if (totalMinutes > shift.getLunchThreshold() && !hasClockOutDuringLunch(dailypunchlist, shift)) {
             totalMinutes -= shift.getLunchDuration();
         }
 
         return totalMinutes;
+    }
+
+    //method that checks if a lunch break was actually taken
+    private static boolean hasClockOutDuringLunch(ArrayList<Punch> dailypunchlist, Shift shift) {
+        for (int i = 0; i < dailypunchlist.size() - 1; i++) {
+            Punch current = dailypunchlist.get(i);
+            Punch next = dailypunchlist.get(i + 1);
+        
+            //this checks if a clock out is followed by a clock in during lunch
+            if (current.getPunchType() == EventType.CLOCK_OUT &&
+                current.getAdjustedTimestamp().toLocalTime().isBefore(shift.getLunchStop()) &&
+                next.getPunchType() == EventType.CLOCK_IN &&
+                next.getAdjustedTimestamp().toLocalTime().isAfter(shift.getLunchStart())) {
+                //lunch break was taken
+                return true;  
+            }
+        }
+        //no lunch break was taken
+        return false;
     }
 }
