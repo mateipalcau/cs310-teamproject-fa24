@@ -3,9 +3,7 @@ import edu.jsu.mcis.cs310.tas_fa24.Department;
 import java.sql.*;
 import java.util.ArrayList;
 public class DepartmentDAO {
-    
     private final DAOFactory daoFactory;
-    
     DepartmentDAO(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
@@ -18,7 +16,6 @@ public class DepartmentDAO {
         
         try {
             conn = daoFactory.getConnection();
-            
             String query = "SELECT * FROM department WHERE id = ?";
             ps = conn.prepareStatement(query);
             ps.setInt(1,id);
@@ -28,7 +25,6 @@ public class DepartmentDAO {
                 int departId = rs.getInt("id");
                 String description = rs.getString("description");
                 int terminalId = rs.getInt("terminalid");
-                
                 depart = new Department(id, description, terminalId);
             }
             
@@ -36,10 +32,8 @@ public class DepartmentDAO {
         
         finally {
             if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            
+            if (ps != null) ps.close();  
         }
         return depart;
-       
     }
 }

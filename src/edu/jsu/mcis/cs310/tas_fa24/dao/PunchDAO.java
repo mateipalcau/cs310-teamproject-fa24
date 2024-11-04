@@ -12,17 +12,14 @@ import java.util.ArrayList;
 
 public class PunchDAO {
     private static final String QUERY_CREATE = "INSERT INTO event (terminalid, badgeid, timestamp, eventtypeid) VALUES (?, ?, ?, ?)";
-    
     private final DAOFactory daoFactory; 
     
     PunchDAO(DAOFactory daoFactory) {
-
         this.daoFactory = daoFactory;
     }
     
     public Punch find(int id) throws SQLException {
         String query = "SELECT * FROM event WHERE id = ?";
-        
         Connection conn = null;
         Punch punch = null;
         PreparedStatement ps = null;
@@ -32,7 +29,6 @@ public class PunchDAO {
             conn = daoFactory.getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, id);
-            
             rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -41,18 +37,15 @@ public class PunchDAO {
                 Badge badge = badgeDAO.find(rs.getString("badgeid"));
                 LocalDateTime originalTimestamp = rs.getTimestamp("timestamp").toLocalDateTime();
                 EventType punchType = EventType.values()[rs.getInt("eventtypeid")];
-
                 punch = new Punch(id, terminalId, badge, originalTimestamp, punchType);
             }
         } finally {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
         }
-
         return punch;
     }
-    
-    
+
     public int create(Punch punch) throws SQLException{
         int result = 0;
         int punch_terminalid = punch.getTerminalId();
@@ -65,11 +58,8 @@ public class PunchDAO {
         
         Department department = employee.getDepartment();
         int department_id = department.getTerminalId();
-                
-  
-        
+
         if(punch_terminalid == 0 || punch_terminalid == department_id){
-            
             PreparedStatement ps = null;
             ResultSet rs = null;
                     
@@ -99,36 +89,27 @@ public class PunchDAO {
                             result = rs.getInt(1);
                         }
                     }
-                }
-                        
+                }     
             }
             catch (Exception e) { e.printStackTrace(); }
         
             finally {
-            
                 if (rs != null) { try { rs.close(); } catch (Exception e) { e.printStackTrace(); } }
                 if (ps != null) { try { ps.close(); } catch (Exception e) { e.printStackTrace(); } }
-            
             }
             //exception, directly insert the punch in event table
-            
-            
         }else{
              result = 0;
 
         } 
         return result;
-        
     }
     
     public ArrayList<Punch> list(Badge badge, LocalDate timestamp) throws SQLException{
         ArrayList<Punch> arr = new ArrayList<Punch>();
-        
         String query = "SELECT * FROM event WHERE badgeid = ? ORDER BY timestamp";
-        
         PunchDAO punchDAO = daoFactory.getPunchDAO();
         Punch punch = null;
-        
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -137,7 +118,6 @@ public class PunchDAO {
             conn = daoFactory.getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, badge.getId());
-            
             rs = ps.executeQuery();
             
             while(rs.next()){
@@ -153,17 +133,13 @@ public class PunchDAO {
                     break;
                 }*/
             }
-            
         }
         catch (Exception e) { e.printStackTrace(); }
         
         finally {
-            
             if (rs != null) { try { rs.close(); } catch (Exception e) { e.printStackTrace(); } }
-            if (ps != null) { try { ps.close(); } catch (Exception e) { e.printStackTrace(); } }
-            
+            if (ps != null) { try { ps.close(); } catch (Exception e) { e.printStackTrace(); } }  
         }
         return arr;
-        
     }
 }

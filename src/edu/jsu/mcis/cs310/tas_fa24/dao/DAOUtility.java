@@ -31,10 +31,8 @@ public final class DAOUtility {
             if (punch.getAdjustmentType() != null) {
                 punchData.put("adjustmenttype", punch.getAdjustmentType().toString());
         }
-        
             punchData.put("originaltimestamp", punch.getFormattedOriginalTimestamp());
             punchData.put("adjustedtimestamp", punch.getFormattedAdjustedTimestamp());
-
             jsonData.add(punchData);
         }
         return Jsoner.serialize(jsonData);
@@ -61,7 +59,6 @@ public final class DAOUtility {
         if (totalMinutes > shift.getLunchThreshold() && !hasClockOutDuringLunch(dailypunchlist, shift)) {
             totalMinutes -= shift.getLunchDuration();
         }
-
         return totalMinutes;
     }
 
@@ -70,7 +67,6 @@ public final class DAOUtility {
         for (int i = 0; i < dailypunchlist.size() - 1; i++) {
             Punch current = dailypunchlist.get(i);
             Punch next = dailypunchlist.get(i + 1);
-        
             //this checks if a clock out is followed by a clock in during lunch
             if (current.getPunchType() == EventType.CLOCK_OUT &&
                 current.getAdjustedTimestamp().toLocalTime().isBefore(shift.getLunchStop()) &&

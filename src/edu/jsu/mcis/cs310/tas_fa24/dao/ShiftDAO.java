@@ -1,12 +1,10 @@
 package edu.jsu.mcis.cs310.tas_fa24.dao;
-
 import edu.jsu.mcis.cs310.tas_fa24.Badge;
 import edu.jsu.mcis.cs310.tas_fa24.Shift;
 import java.sql.*;
 import java.util.HashMap;
 
 public class ShiftDAO {
-    
     private final DAOFactory daoFactory;
     
     ShiftDAO(DAOFactory daoFactory) {
@@ -21,7 +19,6 @@ public class ShiftDAO {
         
         try{
             conn = daoFactory.getConnection();
-            
             String query = "SELECT * FROM shift WHERE id = ?";
             ps = conn.prepareStatement(query);
             ps.setInt(1,id);
@@ -39,14 +36,12 @@ public class ShiftDAO {
                 shiftData.put("lunchstart", rs.getString("lunchstart"));
                 shiftData.put("lunchstop", rs.getString("lunchstop"));
                 shiftData.put("lunchthreshold", Integer.toString(rs.getInt("lunchthreshold")));
-    
                 shift = new Shift(shiftData);
-}
-}
+            }
+        }
         finally {
             if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            
+            if (ps != null) ps.close();   
         }
         return shift;
     }
@@ -61,7 +56,6 @@ public class ShiftDAO {
         
         try{
             conn = daoFactory.getConnection();
-            
             String query = "SELECT * FROM employee WHERE badgeid = ?";
             ps = conn.prepareStatement(query);
             ps.setString(1,badge_id);
@@ -69,14 +63,12 @@ public class ShiftDAO {
             
             if(rs.next()){
                 int shift_id = rs.getInt("shiftid");
-                shift = shiftDAO.find(shift_id);
-                
+                shift = shiftDAO.find(shift_id);  
             }
         }
         finally {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
-            
         }
         return shift;
     }
