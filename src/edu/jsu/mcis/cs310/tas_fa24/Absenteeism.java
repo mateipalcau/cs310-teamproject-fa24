@@ -3,7 +3,9 @@ package edu.jsu.mcis.cs310.tas_fa24;
 import edu.jsu.mcis.cs310.tas_fa24.Employee;
 import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Locale;
 
 
@@ -15,7 +17,7 @@ public class Absenteeism {
     public Absenteeism(Employee e, LocalDate ts, BigDecimal percentage)
     {
         this.employee = e;
-        this.startPayPeriod = ts;
+        this.startPayPeriod = ts.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
         this.percentage = percentage;
     }
     
@@ -37,7 +39,7 @@ public class Absenteeism {
         s.append("#").append(employee.getBadge().getId()).append(" ");
         s.append("(Pay Period Starting ");
         DateTimeFormatter df = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH);
-        String date = startPayPeriod.format(df);
+        String date = this.startPayPeriod.format(df);
         s.append(date).append("): ").append(percentage).append("%");
         
         return s.toString();

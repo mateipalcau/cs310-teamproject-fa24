@@ -74,7 +74,7 @@ public class AbsenteeismTest {
     }
     
     @Test
-    public void testAbsenteeismShift1Weekend() {
+    public void testAbsenteeismShift1Weekend() throws SQLException {
         
         AbsenteeismDAO absenteeismDAO = daoFactory.getAbsenteeismDAO();
         EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
@@ -89,7 +89,7 @@ public class AbsenteeismTest {
         
         /* Get Pay Period Punch List */
         
-        LocalDate ts = p.getOriginaltimestamp().toLocalDate();
+        LocalDate ts = p.getOriginalTimestamp().toLocalDate();
         LocalDate begin = ts.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
         LocalDate end = begin.with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
         
@@ -121,7 +121,7 @@ public class AbsenteeismTest {
     }
     
     @Test
-    public void testAbsenteeismShift2Weekend() {
+    public void testAbsenteeismShift2Weekend() throws SQLException {
         
         //System.err.println("testAbsenteeismShift2Weekend()");
         
@@ -138,7 +138,7 @@ public class AbsenteeismTest {
         
         /* Get Pay Period Punch List */
         
-        LocalDate ts = p.getOriginaltimestamp().toLocalDate();
+        LocalDate ts = p.getOriginalTimestamp().toLocalDate();
         LocalDate begin = ts.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
         LocalDate end = begin.with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
         
