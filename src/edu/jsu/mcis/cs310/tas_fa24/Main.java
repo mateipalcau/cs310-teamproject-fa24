@@ -26,6 +26,16 @@ public class Main {
         int punchid = punchDAO.create(p1);
         Punch p = punchDAO.find(punchid);
         
+        LocalDate ts1 = LocalDate.of(2018, Month.SEPTEMBER, 26);
+        LocalDate ts2 = LocalDate.of(2018, Month.SEPTEMBER, 29);
+        ArrayList<Punch> p2 = punchDAO.list(b, ts1, ts2);
+        
+        StringBuilder s1 = new StringBuilder();
+        for (Punch x : p2) {
+            s1.append(x.printOriginal());
+            s1.append("\n");
+        }
+        
         // output should be "Test Badge: #C4F37EFF (Welch, Travis C)"
         
         System.err.println("Test Badge: " + b.toString());
@@ -34,6 +44,7 @@ public class Main {
         System.err.println("Test Punch Create: " + punchid);
         System.err.println("Test Punch Create: " + p1.printOriginal());
         System.err.println("Test Punch Create: " + p.printOriginal());
+        System.err.println("Test new list method: " + s1.toString());
 
     }
 

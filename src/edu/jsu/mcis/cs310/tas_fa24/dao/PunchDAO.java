@@ -142,4 +142,17 @@ public class PunchDAO {
         }
         return arr;
     }
+    
+    public ArrayList<Punch> list(Badge badge, LocalDate begin, LocalDate end) throws SQLException{
+        PunchDAO punchDAO = daoFactory.getPunchDAO();
+        ArrayList<Punch> arr = new ArrayList<Punch>();
+        ArrayList<Punch> arr_full = new ArrayList<Punch>();
+        
+        while(begin.isBefore(end) || begin.isEqual(end)){
+            arr = punchDAO.list(badge, begin);
+            arr_full.addAll(arr);
+            begin = begin.plusDays(1);
+        }
+        return arr_full;
+    }
 }
