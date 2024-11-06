@@ -13,6 +13,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.sql.*;
 
 public class AbsenteeismTest {
     
@@ -26,7 +27,7 @@ public class AbsenteeismTest {
     }
     
     @Test
-    public void testAbsenteeismShift1Weekday() throws SQLException {
+    public void testAbsenteeismShift1Weekday() throws SQLException{
         
         AbsenteeismDAO absenteeismDAO = daoFactory.getAbsenteeismDAO();
         EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
