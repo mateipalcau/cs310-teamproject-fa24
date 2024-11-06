@@ -6,6 +6,7 @@ import edu.jsu.mcis.cs310.tas_fa24.dao.AbsenteeismDAO;
 import edu.jsu.mcis.cs310.tas_fa24.dao.EmployeeDAO;
 import edu.jsu.mcis.cs310.tas_fa24.dao.DAOFactory;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -25,7 +26,7 @@ public class AbsenteeismTest {
     }
     
     @Test
-    public void testAbsenteeismShift1Weekday() {
+    public void testAbsenteeismShift1Weekday() throws SQLException {
         
         AbsenteeismDAO absenteeismDAO = daoFactory.getAbsenteeismDAO();
         EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
