@@ -12,9 +12,11 @@ public class Absenteeism {
     private LocalDate startPayPeriod;
     private BigDecimal percentage;
     
-    public Absenteeism(Employee e, LocalDate ts, percentage)
+    public Absenteeism(Employee e, LocalDate ts, BigDecimal percentage)
     {
-        
+        this.employee = e;
+        this.startPayPeriod = ts;
+        this.percentage = percentage;
     }
     
     @Override
