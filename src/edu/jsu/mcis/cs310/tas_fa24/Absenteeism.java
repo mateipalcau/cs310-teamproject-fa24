@@ -32,7 +32,7 @@ public class Absenteeism {
     }
     
     @Override
-    public String toString()
+    public String toString() 
     {
         StringBuilder s = new StringBuilder();
         
@@ -40,8 +40,8 @@ public class Absenteeism {
         s.append("(Pay Period Starting ");
         DateTimeFormatter df = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH);
         String date = this.startPayPeriod.format(df);
-        s.append(date).append("): ").append(percentage).append("%");
-        
+        s.append(date).append("): ").append(String.format("%.2f", percentage)).append("%");
+    
         return s.toString();
     }
 }

@@ -89,19 +89,19 @@ public final class DAOUtility {
         return false;
     }
     
-    public static BigDecimal calculateAbsenteeism(ArrayList<Punch> punchlist, Shift s){
-        int totalminutes;
-        totalminutes =  DAOUtility.calculateTotalMinutes(punchlist, s);
-        double dif;
-        dif=2400-totalminutes;
-        double per;
-        per=dif*100/2400;
-        BigDecimal bigDecimal = new BigDecimal(Double.toString(per));
-        BigDecimal rounded = bigDecimal.setScale(2, RoundingMode.HALF_UP);
-        
-        return rounded;
-        
-        
-        
+    public static BigDecimal calculateAbsenteeism(ArrayList<Punch> punchlist, Shift s) {
+        int totalMinutesWorked = DAOUtility.calculateTotalMinutes(punchlist, s);
+        System.out.println("Total Minutes Worked: " + totalMinutesWorked); //Debugging output
+    
+        int standardMinutes = 2400; //40 hours a week converted to minutes
+        System.out.println("Standard Minutes: " + standardMinutes); //Debugging output
+    
+        double difference = standardMinutes - totalMinutesWorked;
+        double percentage = (difference * 100.0) / standardMinutes;
+   
+        BigDecimal result = BigDecimal.valueOf(percentage).setScale(2, RoundingMode.HALF_UP);
+        System.out.println("Calculated Absenteeism Percentage (Rounded): " + result); //Debugging output
+
+        return result;
     }
 }
