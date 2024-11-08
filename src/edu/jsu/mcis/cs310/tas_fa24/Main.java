@@ -1,50 +1,55 @@
 package edu.jsu.mcis.cs310.tas_fa24;
 
 import edu.jsu.mcis.cs310.tas_fa24.dao.*;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.*;
 import java.util.*;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
+import java.math.RoundingMode;
+import java.time.temporal.TemporalAdjusters;
+
 public class Main {
     public static void main(String[] args) throws SQLException {
         
         // test database connectivity; get DAOs
 
         DAOFactory daoFactory = new DAOFactory("tas.jdbc");
-        BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
-        ShiftDAO shiftDAO = daoFactory.getShiftDAO();
+        AbsenteeismDAO absenteeismDAO = daoFactory.getAbsenteeismDAO();
         EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
         PunchDAO punchDAO = daoFactory.getPunchDAO();
-        
-        // find badge
 
-        Badge b = badgeDAO.find("C4F37EFF");
-        Shift s = shiftDAO.find(1);
-        Employee e =employeeDAO.find(14);
-        Punch p1 = new Punch(103, badgeDAO.find("021890C0"), EventType.CLOCK_IN);
-        int punchid = punchDAO.create(p1);
-        Punch p = punchDAO.find(punchid);
+        /* Get Punch/Employee Objects */
         
-        LocalDate ts1 = LocalDate.of(2018, Month.SEPTEMBER, 26);
-        LocalDate ts2 = LocalDate.of(2018, Month.SEPTEMBER, 29);
-        ArrayList<Punch> p2 = punchDAO.list(b, ts1, ts2);
+        Punch p = punchDAO.find(4943);
+        Employee e = employeeDAO.find(p.getBadge());
+        Shift s = e.getShift();
+        Badge b = e.getBadge();
         
-        StringBuilder s1 = new StringBuilder();
-        for (Punch x : p2) {
-            s1.append(x.printOriginal());
-            s1.append("\n");
+        /* Get Pay Period Punch List */
+        
+        LocalDate ts = p.getOriginalTimestamp().toLocalDate();
+        LocalDate begin = ts.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+        LocalDate end = begin.with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        
+        ArrayList<Punch> punchlist = punchDAO.list(b, begin, end);
+        
+        /* Adjust Punch List */
+        
+        for (Punch punch : punchlist) {
+            punch.adjust(s);
+            //System.err.println(punch.printAdjusted());
         }
         
-        // output should be "Test Badge: #C4F37EFF (Welch, Travis C)"
+        /* Compute Pay Period Total Absenteeism */
         
-        System.err.println("Test Badge: " + b.toString());
-        System.err.println("Test Shift: " + s.toString());
-        System.err.println("Test Employee: " + e.toString());
-        System.err.println("Test Punch Create: " + punchid);
-        System.err.println("Test Punch Create: " + p1.printOriginal());
-        System.err.println("Test Punch Create: " + p.printOriginal());
-        System.err.println("Test new list method: " + s1.toString());
+        BigDecimal percentage = DAOUtility.calculateAbsenteeism(punchlist, s);
+        
+        /* Insert Absenteeism Into Database */
+        
+        Absenteeism a1 = new Absenteeism(e, ts, percentage);
+        System.err.println("Test big decimal: " +a1.toString());
 
     }
 

@@ -8,6 +8,8 @@ import com.github.cliftonlabs.json_simple.*;
 import edu.jsu.mcis.cs310.tas_fa24.EventType;
 import edu.jsu.mcis.cs310.tas_fa24.Punch;
 import edu.jsu.mcis.cs310.tas_fa24.Shift;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * 
@@ -38,28 +40,35 @@ public final class DAOUtility {
         return Jsoner.serialize(jsonData);
     }
     public static int calculateTotalMinutes(ArrayList<Punch> dailypunchlist, Shift shift) {
-        int totalMinutes = 0;
+        ArrayList<Integer> totalMinutes = new ArrayList<Integer>();
+        int sum=0;
+        
         boolean clockInFound = false;
         Punch clockInPunch = null;
 
-        for (Punch punch : dailypunchlist) {
+        for (Punch punch : dailypunchlist) {   
             if (punch.getPunchType() == EventType.CLOCK_IN) {
                 clockInPunch = punch;
                 clockInFound = true;
             } 
             else if (punch.getPunchType() == EventType.CLOCK_OUT && clockInFound) {
                 int minutesWorked = (int) ChronoUnit.MINUTES.between(clockInPunch.getAdjustedTimestamp(), punch.getAdjustedTimestamp());
-                totalMinutes += minutesWorked;
+                totalMinutes.add(minutesWorked);
                 clockInFound = false;
             } 
             else if (punch.getPunchType() == EventType.TIME_OUT) {
                 clockInFound = false;
             }
         }
-        if (totalMinutes > shift.getLunchThreshold() && !hasClockOutDuringLunch(dailypunchlist, shift)) {
-            totalMinutes -= shift.getLunchDuration();
+        for(int i: totalMinutes){
+           if (i > shift.getLunchThreshold() && !hasClockOutDuringLunch(dailypunchlist, shift)) {
+               i -= shift.getLunchDuration();
+               sum=sum+i;
+           }else{
+               sum=sum+i;
+           }
         }
-        return totalMinutes;
+        return sum;
     }
 
     //method that checks if a lunch break was actually taken
@@ -78,5 +87,21 @@ public final class DAOUtility {
         }
         //no lunch break was taken
         return false;
+    }
+    
+    public static BigDecimal calculateAbsenteeism(ArrayList<Punch> punchlist, Shift s) {
+        int totalMinutesWorked = DAOUtility.calculateTotalMinutes(punchlist, s);
+        System.out.println("Total Minutes Worked: " + totalMinutesWorked); //Debugging output
+    
+        int standardMinutes = 2400; //40 hours a week converted to minutes
+        System.out.println("Standard Minutes: " + standardMinutes); //Debugging output
+    
+        double difference = standardMinutes - totalMinutesWorked;
+        double percentage = (difference * 100.0) / standardMinutes;
+   
+        BigDecimal result = BigDecimal.valueOf(percentage).setScale(2, RoundingMode.HALF_UP);
+        System.out.println("Calculated Absenteeism Percentage (Rounded): " + result); //Debugging output
+
+        return result;
     }
 }
