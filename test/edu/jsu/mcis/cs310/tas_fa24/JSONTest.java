@@ -5,6 +5,7 @@ import java.util.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import com.github.cliftonlabs.json_simple.*;
+import java.time.LocalDate;
 
 public class JSONTest {
 
@@ -140,5 +141,64 @@ public class JSONTest {
         }
 
     }
+    @Test
+    public void testJSONSinglePunch() {
+        try {
+            BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
+            PunchDAO punchDAO = daoFactory.getPunchDAO();
+            ShiftDAO shiftDAO = daoFactory.getShiftDAO();
+
+            String expectedJSON = "[{\"originaltimestamp\":\"TUE 09\\/18\\/2018 21:30:40\",\"badgeid\":\"CBDE17A7\",\"adjustedtimestamp\":\"TUE 09\\/18\\/2018 21:30:00\",\"adjustmenttype\":\"None\",\"terminalid\":\"104\",\"id\":\"5005\",\"punchtype\":\"CLOCK OUT\"}]";
+            ArrayList<HashMap<String, String>> expected = (ArrayList) Jsoner.deserialize(expectedJSON);
+
+            Punch p = punchDAO.find(5005);
+            Badge b = badgeDAO.find(p.getBadge().getId());
+            Shift s = shiftDAO.find(b);
+
+            ArrayList<Punch> dailypunchlist = punchDAO.list(b, p.getOriginalTimestamp().toLocalDate());
+            
+            Iterator<Punch> iterator = dailypunchlist.iterator();
+            while (iterator.hasNext()) {
+                Punch punch = iterator.next();
+                if (punch.getId() != 5005) {
+                    iterator.remove();
+                }
+            }
+            for (Punch punch : dailypunchlist) {
+                punch.adjust(s);
+            }
+
+            String actualJSON = DAOUtility.getPunchListAsJSON(dailypunchlist);
+            ArrayList<HashMap<String, String>> actual = (ArrayList) Jsoner.deserialize(actualJSON);
+            assertEquals(expected, actual);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    @Test
+    public void testJSONNoPunches() {
+        try {
+            BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
+            PunchDAO punchDAO = daoFactory.getPunchDAO();
+
+            String expectedJSON = "[]";
+            ArrayList<HashMap<String, String>> expected = (ArrayList) Jsoner.deserialize(expectedJSON);
+            Badge b = badgeDAO.find("12565C60");
+            LocalDate noPunchDate = LocalDate.of(2018, 9, 22);
+            ArrayList<Punch> dailypunchlist = punchDAO.list(b, noPunchDate);
+            String actualJSON = DAOUtility.getPunchListAsJSON(dailypunchlist);
+
+            ArrayList<HashMap<String, String>> actual = (ArrayList) Jsoner.deserialize(actualJSON);
+            assertEquals(expected, actual);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
