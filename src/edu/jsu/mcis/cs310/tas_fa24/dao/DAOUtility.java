@@ -80,7 +80,9 @@ public final class DAOUtility {
             if (current.getPunchType() == EventType.CLOCK_OUT &&
                 current.getAdjustedTimestamp().toLocalTime().isBefore(shift.getLunchStop()) &&
                 next.getPunchType() == EventType.CLOCK_IN &&
-                next.getAdjustedTimestamp().toLocalTime().isAfter(shift.getLunchStart())) {
+                next.getAdjustedTimestamp().toLocalTime().isAfter(shift.getLunchStart()) && 
+                next.getAdjustedTimestamp().toLocalDate().getDayOfWeek().compareTo(DayOfWeek.SATURDAY)!=0 &&
+                current.getAdjustedTimestamp().toLocalDate().getDayOfWeek().compareTo(DayOfWeek.SATURDAY)!=0) {
                 //lunch break was taken
                 return true;  
             }
