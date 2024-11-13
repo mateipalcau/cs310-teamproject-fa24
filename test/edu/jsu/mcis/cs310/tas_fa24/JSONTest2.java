@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import com.github.cliftonlabs.json_simple.*;
+import edu.jsu.mcis.cs310.tas_fa24.dao.BadgeDAO;
 
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -47,7 +48,7 @@ public class JSONTest2 {
 
             /* Get Pay Period Punch List */
 
-            LocalDate ts = p.getOriginaltimestamp().toLocalDate();
+            LocalDate ts = p.getOriginalTimestamp().toLocalDate();
             LocalDate begin = ts.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
             LocalDate end = begin.with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
 
@@ -99,7 +100,7 @@ public class JSONTest2 {
 
             /* Get Pay Period Punch List */
 
-            LocalDate ts = p.getOriginaltimestamp().toLocalDate();
+            LocalDate ts = p.getOriginalTimestamp().toLocalDate();
             LocalDate begin = ts.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
             LocalDate end = begin.with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
 
@@ -151,7 +152,7 @@ public class JSONTest2 {
 
             /* Get Pay Period Punch List */
 
-            LocalDate ts = p.getOriginaltimestamp().toLocalDate();
+            LocalDate ts = p.getOriginalTimestamp().toLocalDate();
             LocalDate begin = ts.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
             LocalDate end = begin.with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
 
@@ -179,5 +180,30 @@ public class JSONTest2 {
         }
         
     }
-    
+    @Test
+    public void testJSONWithNonExistentPunchID() {
+        try {
+            EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
+            PunchDAO punchDAO = daoFactory.getPunchDAO();
+            int nonExistentPunchId = 9999;
+            Punch p = punchDAO.find(nonExistentPunchId);
+            
+            assertNull("Punch should be null for non-existent ID", p);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testJSONWithNonExistentBadge() {
+    try {
+        EmployeeDAO employeeDAO = daoFactory.getEmployeeDAO();
+        BadgeDAO badgeDAO = daoFactory.getBadgeDAO();
+        String nonExistentBadgeId = "99999999";
+        Badge badge = badgeDAO.find(nonExistentBadgeId);
+        
+        assertNull("Badge should be null for non-existent ID", badge);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 }
