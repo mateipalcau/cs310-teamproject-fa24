@@ -10,10 +10,23 @@ import java.time.format.DateTimeFormatter;
 import java.math.RoundingMode;
 import java.time.temporal.TemporalAdjusters;
 
+/**
+ * The entry point of the application for testing TAS (Time and Attendance System) functionality.
+ * This class demonstrates database connectivity, punch adjustment, absenteeism calculation, 
+ * and storing absenteeism data in the database.
+ */
 public class Main {
+
+    /**
+     * Main method to test the TAS functionality, including database connectivity, punch adjustment, 
+     * and absenteeism calculation.
+     * 
+     * @param args command-line arguments (not used)
+     * @throws SQLException if a database access error occurs
+     */
     public static void main(String[] args) throws SQLException {
         
-        // test database connectivity; get DAOs
+        // Test database connectivity; get DAOs
 
         DAOFactory daoFactory = new DAOFactory("tas.jdbc");
         AbsenteeismDAO absenteeismDAO = daoFactory.getAbsenteeismDAO();
@@ -49,8 +62,7 @@ public class Main {
         /* Insert Absenteeism Into Database */
         
         Absenteeism a1 = new Absenteeism(e, ts, percentage);
-        System.err.println("Test big decimal: " +a1.toString());
+        System.err.println("Test big decimal: " + a1.toString());
 
     }
-
 }
