@@ -20,7 +20,7 @@ import java.time.temporal.TemporalAdjusters;
  * <p>Queries are executed using prepared statements to prevent SQL injection 
  * and to ensure robust database operations.</p>
  * 
- * @author Matei P
+ * @author Matei 
  * @version 1.0
  */
 public class AbsenteeismDAO {
